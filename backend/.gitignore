@@ -1,0 +1,15 @@
+dist
+.env
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# testing
+__test__/coverage
+/coverage
+
+
+# dev local
+/public/uploads

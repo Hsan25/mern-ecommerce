@@ -1,0 +1,24 @@
+[
+  {
+    "method": "Dana",
+    "account": {
+      "nomor": "087775683229",
+      "name": "Hasan"
+    }
+  },
+  {
+    "method": "Go-Pay",
+    "account": {
+      "nomor": "087775683229",
+      "name": "Hasan"
+    }
+  },
+  {
+    "method": "Bank Transfer",
+    "account": {
+      "bank": "BCA",
+      "nomor": "888213874",
+      "name": "Hasan"
+    }
+  }
+]

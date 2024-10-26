@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "lib": ["es5", "es6"],
+    "target": "ES6",
+    "module": "CommonJS",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist",
+    "baseUrl": "./src",
+    "noImplicitAny": true,
+    "types": ["./src/types/index.d.ts"],
+    "paths": {
+      "@controller/*": ["controller/*"],
+      "@model/*": ["model/*"],
+      "@service/*": ["service/*"],
+      "@utils/*": ["utils/*"],
+      "@config/*": ["config/*"]
+    },
+    "resolveJsonModule": true
+  },
+  "include": ["src/**/*.ts", "src/app.ts", "*.ts", "src", "jest.config.ts"],
+  "exclude": [
+    "node_modules",
+    ".src/__test__/coverage",
+    "./dist",
+    "./src/__tests__"
+    // "jest.config.ts"
+  ],
+  "ts-node": {
+    // Do not forget to `npm i -D tsconfig-paths`
+    "require": ["tsconfig-paths/register"],
+    "transpileOnly": true
+  }
+}
