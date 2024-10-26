@@ -1,0 +1,26 @@
+{
+  "welcome": "Selamat Datang di website Galaxy Store",
+  "description": "Ini adalah deskripsi bahasa indonesia",
+  "searchProduct": "cari product",
+  "HomePage": {
+    "t-shirt": "pakaian",
+    "allProduct": "semua product"
+  },
+  "promotion": {
+    "discount": "banyak discount",
+    "shipping": "pengiriman ke seluruh Indonesia"
+  },
+  "modalAlert": {
+    "message": "masuk untuk melanjutkan"
+  },
+  "form": {
+    "address": {
+      "address": "alamat",
+      "phoneNumber": "nomor handphone",
+      "city": "kota",
+      "state": "provinsi",
+      "fullname": "nama lengkap",
+      "shippingAddress": "alamat pengiriman"
+    }
+  }
+}

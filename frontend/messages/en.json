@@ -1,0 +1,22 @@
+{
+  "welcome": "Welcome to website Galaxy Store",
+  "description": "This is an English description.",
+  "searchProduct": "search product",
+  "promotion": {
+    "discount": "big discount",
+    "shipping": "delivery throughout Indonesia"
+  },
+  "modalAlert": {
+    "message": "masuk untuk melanjutkan"
+  },
+  "form": {
+    "address": {
+      "address": "address",
+      "phoneNumber": "phoneNumber",
+      "city": "city",
+      "state": "state",
+      "fullname": "fullName",
+      "shippingAddress": "shipping address"
+    }
+  }
+}
