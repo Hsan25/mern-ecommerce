@@ -8,16 +8,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Badge } from "../ui/badge";
+import { Badge } from "./ui/badge";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import apiService from "@/lib/axios";
 import type { Pagination } from "@/types";
-import { Button } from "../ui/button";
-import TableSkeleton from "../TableSkeleton";
+import { Button } from "./ui/button";
+import TableSkeleton from "./TableSkeleton";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import PaginationOrder from "../Pagination";
-import { useToast } from "../ui/use-toast";
-import AlertDialog from "../AlertDialog";
+import PaginationOrder from "./Pagination";
+import { useToast } from "./ui/use-toast";
+import AlertDialog from "./AlertDialog";
 import { formatIDR, formatDate } from "@/utils";
 import { ORDER_STATUS } from "@/constant";
 import { OrderDetail } from "@/types/order";

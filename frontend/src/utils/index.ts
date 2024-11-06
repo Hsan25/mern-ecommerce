@@ -6,7 +6,10 @@ export const formatIDR = (num: number) => {
   }).format(num);
 };
 
-export const formatDate = (date: Date | undefined | number, withTime = false) => {
+export const formatDate = (
+  date: Date | undefined | number,
+  withTime = false
+) => {
   if (!withTime) {
     return new Intl.DateTimeFormat("id-ID", {
       // day: "numeric",

@@ -8,7 +8,7 @@ import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 import { Button } from "../ui/button";
 import { delay } from "@/lib/utils";
-import Rating from "../Product/Rating";
+import Rating from "./Rating";
 
 const ReviewsProducts = ({ id }: { id: string }) => {
   const [reviews, setReviews] = useState<Review[]>();

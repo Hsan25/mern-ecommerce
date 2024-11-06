@@ -26,12 +26,15 @@ const PaymentDashboardPage = () => {
   const [id, setId] = useState<string>("");
   const searchParams = useSearchParams();
   const page = searchParams.get("page") || "1";
-  const { data, isLoading } = useSWR<{ payments: Pay[]; pagination: Pagination }>(
-    `/pay?page=${page}`,
-    fetcher
-  );
+  const { data, isLoading } = useSWR<{
+    payments: Pay[];
+    pagination: Pagination;
+  }>(`/pay?page=${page}`, fetcher);
 
-  const updateStatusPayment = async (id: string, status: "success" | "rejected") => {
+  const updateStatusPayment = async (
+    id: string,
+    status: "success" | "rejected"
+  ) => {
     try {
       const res = await apiService.put(`/pay/${id}/${status}`);
       toast({ description: "success update status" });
@@ -67,8 +70,8 @@ const PaymentDashboardPage = () => {
       <div className="flex text-sm">
         <span>note:</span>
         <div className="">
-          Silahkan untuk melakukan konfirmasi terhadapa pembayaran yang ada. Harap konfirmasi
-          secepatnya.
+          Silahkan untuk melakukan konfirmasi terhadapa pembayaran yang ada.
+          Harap konfirmasi secepatnya.
         </div>
       </div>
       <Table>
@@ -101,12 +104,15 @@ const PaymentDashboardPage = () => {
                           : p.status == "rejected"
                           ? "danger"
                           : "orange"
-                      }>
+                      }
+                    >
                       {p.status}
                     </Badge>
                   </TableCell>
                   <TableCell className="">{p.method}</TableCell>
-                  <TableCell className="">{formatDate(new Date(p.createdAt), true)}</TableCell>
+                  <TableCell className="">
+                    {formatDate(new Date(p.createdAt), true)}
+                  </TableCell>
                   <TableCell className="flex gap-2 items-center">
                     <Button
                       onClick={() => {
@@ -115,7 +121,8 @@ const PaymentDashboardPage = () => {
                       }}
                       size={"xs"}
                       disabled={p.status != "waiting"}
-                      variant={"default"}>
+                      variant={"default"}
+                    >
                       Confirm
                     </Button>
                     <Button
@@ -126,13 +133,16 @@ const PaymentDashboardPage = () => {
                       }}
                       size={"xs"}
                       disabled={p.status != "waiting"}
-                      variant={"destructive"}>
+                      variant={"destructive"}
+                    >
                       Reject
                     </Button>
                   </TableCell>
                 </TableRow>
               ))
-            : Array.from({ length: 5 }).map((_, idx) => <TableSkeleton row={8} key={idx} />)}
+            : Array.from({ length: 5 }).map((_, idx) => (
+                <TableSkeleton row={8} key={idx} />
+              ))}
         </TableBody>
       </Table>
     </>

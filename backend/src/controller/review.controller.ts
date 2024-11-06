@@ -1,5 +1,4 @@
 import productModel from "@model/product.model";
-import { updateProductById } from "@service/product.service";
 import response from "@utils/response";
 import {
   addReview,
@@ -15,7 +14,6 @@ const ReviewController = {
     const { id } = req.params;
     const { page, limit } = req.query;
     const LIMIT = Number(limit) || 5;
-    console.log(LIMIT);
     if (LIMIT > 10) return response(res, 400, "max limit 10");
     if (LIMIT < 1) return response(res, 400, "min limit 1");
     try {
@@ -59,6 +57,7 @@ const ReviewController = {
       const doc = await deleteReview(ObjectId(review_id));
       response(res, 200, "success delete review");
     } catch (error: any) {
+      console.log(error);
       response(res, 400, error.message || "failed delete review");
     }
   },

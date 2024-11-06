@@ -8,18 +8,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Badge } from "../ui/badge";
+import { Badge } from "./ui/badge";
 import { useEffect, useState } from "react";
 import apiService from "@/lib/axios";
 import type { Pagination, User } from "@/types";
-import { Button } from "../ui/button";
-import TableSkeleton from "../TableSkeleton";
+import { Button } from "./ui/button";
+import TableSkeleton from "./TableSkeleton";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import PaginationUser from "../Pagination";
-import { useToast } from "../ui/use-toast";
+import PaginationUser from "./Pagination";
+import { useToast } from "./ui/use-toast";
 import Link from "next/link";
 import Image from "next/image";
-import AlertDialog from "../AlertDialog";
+import AlertDialog from "./AlertDialog";
 import { fetcher } from "@/lib/fetcher";
 import useSWR from "swr";
 

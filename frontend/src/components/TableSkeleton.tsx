@@ -1,6 +1,6 @@
 import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { TableCell, TableRow } from "../ui/table";
+import { TableCell, TableRow } from "../components/ui/table";
 
 const TableSkeleton = ({ row }: { row: number }) => {
   return (

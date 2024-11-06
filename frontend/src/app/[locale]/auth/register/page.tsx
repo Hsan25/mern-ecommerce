@@ -10,6 +10,18 @@ import Link from "next/link";
 import { delay } from "@/lib/utils";
 import { Register, useAuth } from "@/context/authContext";
 import { FaGoogle } from "react-icons/fa";
+const registeSchema = z.object({
+  username: z
+    .string()
+    .min(5, { message: "must contain at least 5 character(s)" }),
+  email: z
+    .string()
+    .min(1, { message: "This field has to be filled." })
+    .email("Invalid Email"),
+  password: z
+    .string()
+    .min(6, { message: "must contain at least 6 character(s)" }),
+});
 const RegisterPage = () => {
   const [error, setError] = useState<string>("");
   const { push } = useRouter();
@@ -17,18 +29,6 @@ const RegisterPage = () => {
   const { toast } = useToast();
   const { register: registerUser } = useAuth();
   const { register, handleSubmit, reset } = useForm<Register>();
-  const registeSchema = z.object({
-    username: z
-      .string()
-      .min(5, { message: "must contain at least 5 character(s)" }),
-    email: z
-      .string()
-      .min(1, { message: "This field has to be filled." })
-      .email("Invalid Email"),
-    password: z
-      .string()
-      .min(6, { message: "must contain at least 6 character(s)" }),
-  });
 
   const onSubmit: SubmitHandler<Register> = async (data) => {
     try {
@@ -91,7 +91,10 @@ const RegisterPage = () => {
         </div>
         <div className="text-center">or</div>
         <div className="flex w-full flex-col gap-3 items-center pt-4">
-          <Button className="w-56 max-w-full flex gap-3 items-center " size={"sm"}>
+          <Button
+            className="w-56 max-w-full flex gap-3 items-center "
+            size={"sm"}
+          >
             <FaGoogle size={20} />
             <span>Login With Google</span>
           </Button>

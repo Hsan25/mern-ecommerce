@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 import "lib/cron";
 import helmet from "helmet";
 import { rateLimit } from "express-rate-limit";
+import morgan from "morgan";
 dotenv.config();
 const app = express();
 
@@ -23,12 +24,14 @@ const limiter = rateLimit({
 app.use(
   cors({
     credentials: true,
-    methods: ["GET","HEAD","PUT","POST","DELETE"],
+    methods: ["GET", "HEAD", "PUT", "POST", "DELETE"],
     origin: ["http://localhost:3000", "http://192.168.252.148:3000"],
   }),
 );
 app.use(helmet());
 app.use(limiter);
+// logger use morgan
+app.use(morgan("tiny"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());

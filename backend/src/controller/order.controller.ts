@@ -16,7 +16,6 @@ const OrderController = {
   createNewOrder: async (req: Request, res: Response) => {
     try {
       const body: OrderBody = req.body;
-      console.log(body);
       const user = req.user;
       if (!user) return response(res, 401);
       const newOrder = await createNewOrder(user.id, {
@@ -30,6 +29,7 @@ const OrderController = {
         id: newOrder._id,
       });
     } catch (error: any) {
+      console.log(error)
       if (error instanceof Error) {
         return response(res, 400, error.message);
       }
@@ -67,6 +67,7 @@ const OrderController = {
       const order = await updateOrder(new Types.ObjectId(orderId), { ...body });
       response(res, 200, "Success update order");
     } catch (error: any) {
+      console.log(error)
       if (error instanceof z.ZodError) {
         response(
           res,
@@ -96,14 +97,13 @@ const OrderController = {
         },
       });
     } catch (error: any) {
+      console.log(error)
       response(res, 400, error.message || "failed fetch orders", null);
     }
   },
   getOrderByUser: async (req: Request, res: Response) => {
     const { page, limit, search, status } = req.query;
     const { user } = req.params;
-    console.log(req.query);
-    console.log(user);
     const LIMIT = Number(limit) || 10;
     if (!user) return response(res, 400, "user id required");
     if (!page) return response(res, 400, "Params page required");
@@ -127,6 +127,7 @@ const OrderController = {
         },
       });
     } catch (error: any) {
+      console.log(error)
       response(res, 400, error.message || "failed fetch orders", null);
     }
   },
@@ -136,6 +137,7 @@ const OrderController = {
       const order = await getOrderById(new Types.ObjectId(id));
       response(res, 200, "success fetch order", { order });
     } catch (error) {
+      console.log(error)
       response(res, 400, "failed fetch order", null);
     }
   },

@@ -1,0 +1,17 @@
+{
+  "name": "Ecommerce",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev:frontend": "cd frontend && pnpm dev",
+    "dev:backend": "cd backend && pnpm dev",
+    "install:frontend": "cd frontend && pnpm install",
+    "install:backend": "cd backend && pnpm install",
+    "seed": "cd backend && pnpm seed"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

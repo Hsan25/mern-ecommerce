@@ -190,6 +190,7 @@ const productController = {
       const deleted = await deleteProductById(ObjectId(id));
       if (deleted) response(res, 200, `success delete product with id: ${id}`);
     } catch (error) {
+      console.log(error)
       response(res, 404, `failed delete product with id: ${id}`);
     }
   },

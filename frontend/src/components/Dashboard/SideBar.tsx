@@ -42,6 +42,11 @@ const bar: Bar[] = [
     href: "/dashboard/shipping-method",
     icon: <MdLocalShipping size={20} />,
   },
+  {
+    name: "Categories",
+    href: "/dashboard/categories",
+    icon: <IoDocumentText size={20} />,
+  },
 ];
 
 const SideBarDashboard = () => {
@@ -55,17 +60,23 @@ const SideBarDashboard = () => {
         id="sidebar-toggle"
         className={`${
           isOpen ? "active" : ""
-        } toggle sm:hidden  absolute m-4 mt-5 cursor-pointer flex flex-col w-8 z-20 h-5 justify-between`}>
+        } toggle sm:hidden  absolute m-4 mt-5 cursor-pointer flex flex-col w-8 z-20 h-5 justify-between`}
+      >
         <span
-          className={` bg-primary transition-transform origin-top-right rounded-sm w-full h-1 block`}></span>
-        <span className={` bg-primary rounded-sm transition-transform  w-full h-1 block`}></span>
+          className={` bg-primary transition-transform origin-top-right rounded-sm w-full h-1 block`}
+        ></span>
         <span
-          className={` bg-primary transition-transform origin-bottom-right rounded-sm w-full h-1 block`}></span>
+          className={` bg-primary rounded-sm transition-transform  w-full h-1 block`}
+        ></span>
+        <span
+          className={` bg-primary transition-transform origin-bottom-right rounded-sm w-full h-1 block`}
+        ></span>
       </div>
       <div
         className={`${
           isOpen ? "-left-0" : "-left-96"
-        } md:w-64 fixed sm:relative sm:-left-0 min-w-64 z-10 transition-transform   p-2 py-5 min-h-screen bg-background border-r-foreground border-r-[.5px]`}>
+        } md:w-64 fixed sm:relative sm:-left-0 min-w-64 z-10 transition-transform   p-2 py-5 min-h-screen bg-background border-r-foreground border-r-[.5px]`}
+      >
         <div className="text-xl text-center pt-10">Dashboard</div>
         <div className="flex flex-col gap-2 pt-10 ">
           {bar.map((item, idx: number) => {
@@ -79,7 +90,8 @@ const SideBarDashboard = () => {
                   "/dashboard/" + path.split("/")[3] == item.href
                     ? "bg-accent text-accent-foreground"
                     : ""
-                } w-full min-w-full font-medium flex justify-start gap-4 items-center ring-1 ring-primary`}>
+                } w-full min-w-full font-medium flex justify-start gap-4 items-center ring-1 ring-primary`}
+              >
                 {item.icon}
                 <span>{item.name}</span>
               </Button>
@@ -88,7 +100,8 @@ const SideBarDashboard = () => {
         </div>
         <Button
           variant={"ghost"}
-          className="absolute bottom-0 inset-x-0 text-red-600 mx-auto block min-w-full">
+          className="absolute bottom-0 inset-x-0 text-red-600 mx-auto block min-w-full"
+        >
           Log Out
         </Button>
       </div>

@@ -80,8 +80,11 @@ NEXT_PUBLIC_BASE_URL=http://localhost:3000
 Now, install dependencies for both the frontend and backend. You can do this from the root of the project.
 
 ```bash
- cd frontend && pnpm install
- cd backend && pnpm install
+# frontend
+ pnpm install:frontend
+
+# backend
+ pnpm install:backend
 ```
 This will install dependencies for both the frontend and backend folders.
 ## Seeding the Database
@@ -91,8 +94,11 @@ To seed the database with initial data (like creating an admin user), you'll nee
 Ensure that MongoDB is running, and then run the following command inside the backend folder to seed the database:
 
 ```bash
-cd backend
-pnpm seed
+ pnpm seed
+
+ # or
+ cd backend && pnpm seed
+
 ```
 The seed script will:
 
@@ -105,8 +111,11 @@ Once everything is set up, you can run both the frontend and backend concurrentl
 From the root of the project, simply run:
 
 ```bash
-cd backend && pnpm dev
-cd frontend && pnpm dev
+# run backend
+ pnpm dev:backend
+
+#run frontend 
+ pnpm dev:frontend
 ```
 This will run both the frontend on http://localhost:3000 and the backend on http://localhost:3001.
 

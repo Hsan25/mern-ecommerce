@@ -11,12 +11,12 @@ import {
 import { useEffect, useState } from "react";
 import apiService from "@/lib/axios";
 import type { Pagination, Product, User } from "@/types";
-import { Button } from "../ui/button";
-import TableSkeleton from "../TableSkeleton";
+import { Button } from "./ui/button";
+import TableSkeleton from "../app/TableSkeleton";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import PaginationProduct from "../Pagination";
-import { useToast } from "../ui/use-toast";
-import AlertDialog from "../AlertDialog";
+import PaginationProduct from "./Pagination";
+import { useToast } from "./ui/use-toast";
+import AlertDialog from "./AlertDialog";
 import Image from "next/image";
 import { formatIDR } from "@/utils";
 import useSWR from "swr";
@@ -57,7 +57,11 @@ const TableProduct = () => {
     <>
       <Table>
         <TableCaption>
-          {!isLoading ? (data?.products ? "List product" : "no products") : "Loading..."}
+          {!isLoading
+            ? data?.products
+              ? "List product"
+              : "no products"
+            : "Loading..."}
         </TableCaption>
         <TableHeader>
           <TableRow>

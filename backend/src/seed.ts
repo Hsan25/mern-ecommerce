@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const email = process.env.ADMIN_EMAIL || "admin@gmail.com";
-const password = process.env.ADMIN_PASSWORD || '"admin123456"';
+const password = process.env.ADMIN_PASSWORD || "admin123456";
 const seedAdmin = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URL || "");

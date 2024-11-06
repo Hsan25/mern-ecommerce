@@ -2,7 +2,7 @@
 import AlertDialog from "@/components/AlertDialog";
 import OtherProducts from "@/components/OtherProducts";
 import Rating from "@/components/Product/Rating";
-import ReviewsProducts from "@/components/ReviewProduct";
+import ReviewsProducts from "@/components/ReviewProduct/ReviewProduct";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { useAuth } from "@/context/authContext";

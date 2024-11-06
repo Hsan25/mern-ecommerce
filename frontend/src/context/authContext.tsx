@@ -124,6 +124,7 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     return () => {
       apiService.interceptors.request.eject(requestInterceptor);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
   useEffect(() => {
     const responseInterceptor = apiService.interceptors.response.use(

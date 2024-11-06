@@ -23,6 +23,7 @@ const PaymentController = {
       });
       response(res, 201, "success request confirmation");
     } catch (error) {
+      console.log(error)
       response(res, 400, "failed request confirmation");
     }
   },
@@ -37,6 +38,7 @@ const PaymentController = {
       );
       response(res, 200, "success update status");
     } catch (error) {
+      console.log(error)
       response(res, 400, "failed update status");
     }
   },

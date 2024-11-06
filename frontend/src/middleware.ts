@@ -16,7 +16,8 @@ const publicPages = [""];
 export async function middleware(req: NextRequest) {
   try {
     const { pathname } = req.nextUrl;
-    // remove locole
+    // remove lang locale
+    // /en/about => /about  
     const path = "/" + pathname.split("/").splice(2).join("/");
     if (path.startsWith("/auth")) {
       const isLogin = await isAuthenticated(req);

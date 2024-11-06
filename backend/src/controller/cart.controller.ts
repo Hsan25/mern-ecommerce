@@ -5,31 +5,32 @@ import {
   getCartByUserId,
   getCarts,
   updateItemCart,
-} from '@service/cart.service';
-import { ObjectId } from '@utils/index';
-import response from '@utils/response';
-import { Request, Response } from 'express';
-import { Types } from 'mongoose';
+} from "@service/cart.service";
+import { ObjectId } from "@utils/index";
+import response from "@utils/response";
+import { Request, Response } from "express";
+import { Types } from "mongoose";
 const CartController = {
   getAllCart: async (req: Request, res: Response) => {
     try {
       const carts = await getCarts();
-      response(res, 200, 'success get cart', {
+      response(res, 200, "success get cart", {
         carts,
       });
     } catch (error) {
       console.log(error);
-      response(res, 400, 'failed get cart');
+      response(res, 400, "failed get cart");
     }
   },
   getCartById: async (req: Request, res: Response) => {
     const { id } = req.params;
     try {
       const cart = await getCartById(ObjectId(id));
-      response(res, 200, 'success fetch cart', {
+      response(res, 200, "success fetch cart", {
         cart,
       });
     } catch (error: any) {
+      console.log(error);
       response(res, 400, error.message);
     }
   },
@@ -37,10 +38,11 @@ const CartController = {
     const { id } = req.params;
     try {
       const cart = await getCartByUserId(ObjectId(id));
-      response(res, 200, 'success fetch cart', {
+      response(res, 200, "success fetch cart", {
         cart,
       });
     } catch (error: any) {
+      console.log(error);
       response(res, 400, error.message);
     }
   },
@@ -53,8 +55,9 @@ const CartController = {
         user?.id,
         new Types.ObjectId(body.product),
       );
-      response(res, 201, 'success add cart');
+      response(res, 201, "success add cart");
     } catch (error: any) {
+      console.log(error);
       response(res, 400, error.message);
     }
   },
@@ -63,13 +66,14 @@ const CartController = {
     const body: { quantity: number; status?: any } = req.body;
     const user = req.user;
     if (Number(body.quantity) < 1)
-      return response(res, 400, 'Quantity tidak boleh kosong');
-    if (!body.quantity) return response(res, 400, 'quantity required');
+      return response(res, 400, "Quantity tidak boleh kosong");
+    if (!body.quantity) return response(res, 400, "quantity required");
     try {
       const cart = await updateItemCart(ObjectId(item_cart_id), body);
-      if (!cart) throw new Error('Failed update item cart');
-      response(res, 200, 'success update item cart');
+      if (!cart) throw new Error("Failed update item cart");
+      response(res, 200, "success update item cart");
     } catch (error: any) {
+      console.log(error);
       response(res, 400, error.message);
     }
   },
@@ -82,10 +86,12 @@ const CartController = {
         user.id,
         new Types.ObjectId(item_cart_id),
       );
-      response(res, 200, 'success delete item cart', {
+      response(res, 200, "success delete item cart", {
         cart,
       });
     } catch (error: any) {
+      console.log(error);
+
       response(res, 400, error.message);
     }
   },

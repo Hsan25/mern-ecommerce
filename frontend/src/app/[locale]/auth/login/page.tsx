@@ -10,6 +10,15 @@ import Link from "next/link";
 import { delay } from "@/lib/utils";
 import { useAuth } from "@/context/authContext";
 import { FaGoogle } from "react-icons/fa6";
+const LoginSchema = z.object({
+  email: z
+    .string()
+    .min(1, { message: "This field has to be filled." })
+    .email("Invalid Email"),
+  password: z
+    .string()
+    .min(5, { message: "must contain at least 5 character(s)" }),
+});
 const LoginPage = () => {
   const [error, setError] = useState<string>("");
   const { push } = useRouter();
@@ -24,15 +33,6 @@ const LoginPage = () => {
   }
 
   const { register, handleSubmit, reset } = useForm<Inputs>();
-  const LoginSchema = z.object({
-    email: z
-      .string()
-      .min(1, { message: "This field has to be filled." })
-      .email("Invalid Email"),
-    password: z
-      .string()
-      .min(5, { message: "must contain at least 5 character(s)" }),
-  });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {

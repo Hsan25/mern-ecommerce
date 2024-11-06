@@ -1,21 +1,14 @@
 import "../globals.css";
-// import { roboto_mono } from "./fonts";
+import { roboto_mono } from "../fonts";
 import type { Metadata } from "next";
 import { Toaster } from "@/components/ui/toaster";
-import { getCookie } from "cookies-next";
 import AuthContextProvider from "@/context/authContext";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SWRProvider from "@/components/swr-provider";
-import { Roboto_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import OrderContextProvider from "@/context/orderContext";
-export const roboto_mono = Roboto_Mono({
-  weight: ["300", "400", "500", "700"],
-  subsets: ["latin"],
-  display: "swap",
-});
 export const metadata: Metadata = {
   title: {
     template: " %s | Galaxy-store",

@@ -1,3 +1,4 @@
+import categoriesModel from "@model/categories.model";
 import {
   createCategory,
   deleteCategoryById,
@@ -19,7 +20,7 @@ const categoryController = {
     try {
       const parse = schema.parse(name);
       const newCategory = await createCategory(capitalize(parse));
-      response(res, 203, "success create category", {
+      response(res, 201, "success create category", {
         id: newCategory._id,
       });
     } catch (error: any) {
@@ -33,7 +34,6 @@ const categoryController = {
   },
   getCategories: async (req: Request, res: Response) => {
     try {
-      
       const categories = await getCategories();
       response(res, 200, "success fetch categories", {
         categories,
@@ -64,6 +64,18 @@ const categoryController = {
       response(res, 200, "success delete category");
     } catch (error) {
       response(res, 400, "failed delete category");
+    }
+  },
+  updateCategory: async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { name } = req.body;
+    if (!name) return res.sendStatus(400);
+    try {
+      if (!isValidObjectId(id)) return response(res, 400, "Invalid id");
+      await categoriesModel.updateOne({ _id: id }, { name });
+      response(res, 200, "success update category");
+    } catch (error) {
+      response(res, 400, "failed update category");
     }
   },
 };

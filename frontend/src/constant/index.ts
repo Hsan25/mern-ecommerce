@@ -25,7 +25,6 @@ export enum REVIEW_STATUS {
   Approved = "Approved",
   Waiting_Approval = "Waiting Approval",
 }
-
 export enum PAYMENT_METHOD {
   CashOnDelivery = "Cash On Delivery",
   BankTransfer = "Bank Transfer",
