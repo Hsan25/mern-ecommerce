@@ -8,3 +8,5 @@ app.listen(PORT, () => {
     console.log(`🚀 Server is running in production mode`);
   }
 });
+
+export default app;
