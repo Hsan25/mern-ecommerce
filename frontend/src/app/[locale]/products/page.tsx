@@ -7,6 +7,7 @@ import { fetcher } from "@/lib/fetcher";
 import FilterProduct from "@/components/FilterProduct";
 import CartProduct from "@/components/Product/CardProduct";
 import PaginationProducts from "@/components/Pagination";
+import Loading from "@/components/Loading";
 
 const ProductsPage = () => {
   const searchParams = useSearchParams();
@@ -24,12 +25,9 @@ const ProductsPage = () => {
     fetcher
   );
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loading />;
   return (
     <>
-      <div className="text-lg my-5">
-        {!isLoading && s ? `search result ${s}` : ""}
-      </div>
       <div className="flex flex-col md:flex-row gap-1.5">
         <FilterProduct />
         {data?.products ? (
@@ -42,9 +40,10 @@ const ProductsPage = () => {
             <PaginationProducts totalPages={data.pagination.totalPages} />
           </div>
         ) : (
-          <p>Product not found</p>
+          <p className="">
+            no result for <span className="font-medium">{s}</span>
+          </p>
         )}
-        {!data?.products && s ? <p>no result for {s}</p> : null}
       </div>
     </>
   );

@@ -10,6 +10,15 @@ dist
 src/__test__/coverage
 /coverage
 
+# debug
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# dev local
-/public/uploads
+# local env files
+.env*.local
+.env
+# vercel
+.vercel
+

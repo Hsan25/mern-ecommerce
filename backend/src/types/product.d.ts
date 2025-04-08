@@ -5,7 +5,10 @@ export interface ProductBody {
   price: number;
   categories: string[];
   ratings: number;
-  images: string[];
+  images: {
+    id: string;
+    url: string;
+  };
   seller: string;
 }
 export type SortProduct = "priceLowToHigh" | "priceHighToLow" | "trending";

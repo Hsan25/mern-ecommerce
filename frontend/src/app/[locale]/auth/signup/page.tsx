@@ -7,35 +7,24 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { delay } from "@/lib/utils";
-import { Register, useAuth } from "@/context/authContext";
+import { useAuth } from "@/context/authContext";
 import { FaGoogle } from "react-icons/fa";
-const registeSchema = z.object({
-  username: z
-    .string()
-    .min(5, { message: "must contain at least 5 character(s)" }),
-  email: z
-    .string()
-    .min(1, { message: "This field has to be filled." })
-    .email("Invalid Email"),
-  password: z
-    .string()
-    .min(6, { message: "must contain at least 6 character(s)" }),
-});
+import { Signup } from "@/types";
+import signupSchema from "@/lib/zod/schemaSignup";
+
 const RegisterPage = () => {
   const [error, setError] = useState<string>("");
   const { push } = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { toast } = useToast();
-  const { register: registerUser } = useAuth();
-  const { register, handleSubmit, reset } = useForm<Register>();
+  const { signup } = useAuth();
+  const { register, handleSubmit, reset } = useForm<Signup>();
 
-  const onSubmit: SubmitHandler<Register> = async (data) => {
+  const onSubmit: SubmitHandler<Signup> = async (data) => {
     try {
       setIsLoading(true);
-      await delay(500);
-      const safe = registeSchema.parse(data);
-      const result = await registerUser(safe);
+      const safe = signupSchema.parse(data);
+      await signup(safe);
       reset();
       setError("");
       toast({
@@ -57,9 +46,9 @@ const RegisterPage = () => {
       <form
         onSubmit={handleSubmit(onSubmit)}
         method="post"
-        className="w-full p-4 max-w-sm border border-ring rounded-sm h-[30rem] md:h-[28rem] "
+        className="w-full bg-black p-4 max-w-sm border border-ring rounded-sm h-[30rem] md:h-[28rem] "
       >
-        <div className="text-center text-bold text-xl">Register</div>
+        <div className="text-center text-bold text-xl">Signup</div>
         {error && <div className="text-red-600 my-2 text-xs">* {error}</div>}
         <div className="flex flex-col gap-4 py-2">
           <Input
@@ -94,6 +83,9 @@ const RegisterPage = () => {
           <Button
             className="w-56 max-w-full flex gap-3 items-center "
             size={"sm"}
+            onClick={() =>
+              push(`${process.env.NEXT_PUBLIC_SERVER_API}/auth/google`)
+            }
           >
             <FaGoogle size={20} />
             <span>Login With Google</span>

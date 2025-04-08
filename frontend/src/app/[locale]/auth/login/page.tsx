@@ -17,7 +17,7 @@ const LoginSchema = z.object({
     .email("Invalid Email"),
   password: z
     .string()
-    .min(5, { message: "must contain at least 5 character(s)" }),
+    .min(6, { message: "must contain at least 6 character(s)" }),
 });
 const LoginPage = () => {
   const [error, setError] = useState<string>("");
@@ -37,9 +37,9 @@ const LoginPage = () => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
       setIsLoading(true);
-      await delay(500);
+      // await delay(500);
       const safe = LoginSchema.parse(data);
-      const result = await login(safe);
+      await login(safe);
       reset();
       setError("");
       toast({
@@ -49,6 +49,7 @@ const LoginPage = () => {
         push(decodeURIComponent(redirectPath));
       } else push("/");
     } catch (error: any) {
+      console.log("error", error);
       if (error instanceof z.ZodError) {
         setError(error.issues[0].path[0] + ": " + error.issues[0].message);
       } else {
@@ -63,7 +64,7 @@ const LoginPage = () => {
       <form
         onSubmit={handleSubmit(onSubmit)}
         method="post"
-        className="w-full p-4 max-w-sm border border-ring rounded-sm h-[28rem] md:h-[27rem]"
+        className="w-full p-4 bg-black max-w-sm border border-ring rounded-sm h-[28rem] md:h-[27rem]"
       >
         <div className="text-center text-bold text-xl">Login</div>
         {error && <div className="text-red-600 my-2 text-xs">* {error}</div>}
@@ -84,9 +85,9 @@ const LoginPage = () => {
         </div>
         <div className="text-sm text-center">
           don{"'"}t have an account?
-          <Link href={"/auth/register"}>
+          <Link href={"/auth/signup"}>
             <Button variant={"link"} type="button">
-              Register
+              Signup
             </Button>{" "}
           </Link>
         </div>
@@ -95,6 +96,9 @@ const LoginPage = () => {
           <Button
             className="w-56 max-w-full flex gap-3 items-center "
             size={"sm"}
+            onClick={() =>
+              push(`${process.env.NEXT_PUBLIC_SERVER_API}/auth/google`)
+            }
           >
             <FaGoogle size={20} />
             <span>Login With Google</span>

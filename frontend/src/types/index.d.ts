@@ -1,8 +1,14 @@
+import signupSchema from "@/lib/zod/schemaSignup";
+import { z } from "zod";
+
 export interface User {
   username: string;
   email: string;
   _id: string;
-  avatar: string | null;
+  avatar: {
+    id: string | null;
+    url: string | null;
+  };
   role: "ADMIN" | "USER";
   updatedAt?: Date;
   createdAt?: Date;
@@ -23,7 +29,7 @@ export interface Product {
   name: string;
   description: string;
   price: number;
-  images: string[];
+  images: Images[];
   stock: number;
   ratings: number;
   sold_count: number;
@@ -45,7 +51,11 @@ export type StatusOrder =
   | "Cancelled"
   | "Not processed";
 
-export type PaymentMethod = "Cash On Delivery" | "Bank Transfer" | "Dana" | "Go-Pay";
+export type PaymentMethod =
+  | "Cash On Delivery"
+  | "Bank Transfer"
+  | "Dana"
+  | "Go-Pay";
 
 export interface Pagination {
   totalPages: number;
@@ -64,7 +74,7 @@ export interface ApiResponse<data> {
 
 export interface Pay {
   method: PaymentMethod;
-  status: "success" | "rejected" | "waiting";
+  status: "success" | "rejected" | "waiting confirmation";
   user: string;
   _id: string;
   orderId: string;
@@ -80,6 +90,17 @@ export interface PayloadJWT {
   _id: string;
   username: string;
   email: string;
-  avatar: string;
+  avatar: {
+    id: string | null;
+    url: string | null;
+  };
   role: "ADMIN" | "USER";
 }
+// export interface Signup {
+//   username: string;
+//   email: string;
+//   password: string;
+//   role?: "ADMIN" | "USER";
+// }
+
+export type Signup = z.infer<typeof signupSchema>;

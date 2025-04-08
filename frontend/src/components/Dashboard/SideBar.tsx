@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { MdPayments, MdLocalShipping } from "react-icons/md";
 import { IoDocumentText } from "react-icons/io5";
 import { AiFillProduct } from "react-icons/ai";
+import BurgerMenu from "../Navbar/BurgerMenu";
 interface Bar {
   name: string;
   href: string;
@@ -55,27 +56,13 @@ const SideBarDashboard = () => {
   const { push } = useRouter();
   return (
     <div className="relative">
-      <div
-        onClick={() => setIsOpen(!isOpen)}
-        id="sidebar-toggle"
-        className={`${
-          isOpen ? "active" : ""
-        } toggle sm:hidden  absolute m-4 mt-5 cursor-pointer flex flex-col w-8 z-20 h-5 justify-between`}
-      >
-        <span
-          className={` bg-primary transition-transform origin-top-right rounded-sm w-full h-1 block`}
-        ></span>
-        <span
-          className={` bg-primary rounded-sm transition-transform  w-full h-1 block`}
-        ></span>
-        <span
-          className={` bg-primary transition-transform origin-bottom-right rounded-sm w-full h-1 block`}
-        ></span>
+      <div className="absolute mt-5 ml-5">
+        <BurgerMenu onClick={() => setIsOpen(!isOpen)} open={isOpen} />
       </div>
       <div
         className={`${
           isOpen ? "-left-0" : "-left-96"
-        } md:w-64 fixed sm:relative sm:-left-0 min-w-64 z-10 transition-transform   p-2 py-5 min-h-screen bg-background border-r-foreground border-r-[.5px]`}
+        } md:w-64 fixed bg-black sm:relative sm:-left-0 min-w-64 z-10 transition-transform   p-2 py-5 min-h-screen bg-background border-r-foreground border-r-[.5px]`}
       >
         <div className="text-xl text-center pt-10">Dashboard</div>
         <div className="flex flex-col gap-2 pt-10 ">

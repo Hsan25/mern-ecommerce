@@ -28,10 +28,10 @@ const ShippingMethodController = {
       const body = req.body;
       const { id } = req.params;
       const modifiedCount = await updateShippingMethod(body, ObjectId(id));
-      if(!modifiedCount) throw new Error('Error')
+      if (!modifiedCount) throw new Error("Error");
       return response(res, 200, "success update shipping method");
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return response(res, 400, "Failed update shipping method");
     }
   },
@@ -41,7 +41,7 @@ const ShippingMethodController = {
       const deleteCount = await deleteShippingMethod(ObjectId(id));
       return response(res, 200, "success delete shipping method");
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return response(res, 400, "Failed delete shipping method");
     }
   },
@@ -52,7 +52,7 @@ const ShippingMethodController = {
         shippingMethod: docs,
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return response(res, 400, "Failed fetch shipping method");
     }
   },
@@ -65,7 +65,7 @@ const ShippingMethodController = {
         shippingMethod: doc,
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return response(res, 400, "Failed fetch shipping method");
     }
   },

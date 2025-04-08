@@ -1,37 +1,31 @@
 import { NextRequest, NextResponse } from "next/server";
-import { isAuthenticated } from "@/action";
 import { jwtDecode } from "jwt-decode";
 import { intlMiddleware } from "@/middleware";
-import { PayloadJWT } from "@/types";
-import apiService from "../axios";
-const onlyAdminRoutes = ["/dashboard"];
+import axios from "axios";
 export async function adminMiddleware(req: NextRequest) {
-  const { pathname } = req.nextUrl;
-  const previosUrl = req.headers.get("referer");
-  const token = req.cookies.get("accessToken")?.value;
+  const token = req.cookies.get("accessToken")?.value || "";
+  const refreshToken = req.cookies.get("refreshToken")?.value;
   const currentUrl = encodeURIComponent(req.nextUrl.href); // Encode URL to be used in redirection
-  // const isLogin = await isAuthenticated(req);
-  if (!token) {
-    // Redirect to login if token is invalid
-    return NextResponse.redirect(
-      new URL(`/auth/login?redirect=${currentUrl}`, req.url)
-    );
-  }
   try {
     // 4. Check if the route requires admin access
-    const decoded = jwtDecode<PayloadJWT>(token);
-    // const res = await apiService.get(`/users/${decoded._id}`, {
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    // });
-    // const user = res.data.data.user;
-    // console.log("from middleware", user);
-    if (decoded.role == "ADMIN") {
+    const decoded = jwtDecode(token) as { _id: string };
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_SERVER_API}/users/${decoded._id}`,
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const data = res.data.data.user;
+    if (data.role == "ADMIN") {
       return intlMiddleware(req);
     }
-    return NextResponse.redirect(new URL(previosUrl || "/", req.url));
+    return NextResponse.redirect(new URL("/", req.url));
   } catch (error) {
-    return NextResponse.redirect(new URL(previosUrl || "/", req.url));
+    if (refreshToken) {
+    }
+    return NextResponse.redirect(new URL("/", req.url));
   }
 }

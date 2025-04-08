@@ -1,5 +1,5 @@
 {
-  "welcome": "Selamat Datang di website Galaxy Store",
+  "welcome": "Selamat Datang di Galaxy Store",
   "description": "Ini adalah deskripsi bahasa indonesia",
   "searchProduct": "cari product",
   "HomePage": {
@@ -22,5 +22,6 @@
       "fullname": "nama lengkap",
       "shippingAddress": "alamat pengiriman"
     }
-  }
+  },
+  "changeLanguage": "ganti bahasa"
 }

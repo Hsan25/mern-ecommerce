@@ -50,7 +50,7 @@ const FilterProduct = () => {
       <div
         className={`${
           open ? "!block" : ""
-        } hidden border rounded-sm border-foreground md:block sm:min-w-60 p-2`}>
+        } hidden bg-black border rounded-sm border-foreground md:block sm:min-w-60 p-2`}>
         <div className="justify-between flex">
           <div className="text-base">Filter Product</div>
           <Button disabled={!searchParams.toString() && path.split('/')[3] != 'category'} onClick={() => replace("/products")} size={"xs"}>

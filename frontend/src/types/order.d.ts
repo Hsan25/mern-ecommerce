@@ -1,5 +1,6 @@
 import { PaymentMethod, StatusOrder } from ".";
 import { Address } from "./address";
+import { Images } from "./product";
 
 interface Shipping {
   type: string;
@@ -16,7 +17,7 @@ interface ProductItemOrder {
   _id: string;
   name: string;
   price: number;
-  images: string[];
+  images: Images[];
 }
 
 interface OrderItem {

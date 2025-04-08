@@ -47,7 +47,7 @@ const ReviewController = {
         id: doc._id,
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
       response(res, 400, "failed add review");
     }
   },
@@ -57,7 +57,7 @@ const ReviewController = {
       const doc = await deleteReview(ObjectId(review_id));
       response(res, 200, "success delete review");
     } catch (error: any) {
-      console.log(error);
+      console.error(error);
       response(res, 400, error.message || "failed delete review");
     }
   },

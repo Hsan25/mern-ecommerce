@@ -7,17 +7,21 @@ import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import CartProduct from "@/components/Product/CardProduct";
 import PaginationProducts from "@/components/Pagination";
+import Loading from "@/components/Loading";
 
 const ProductsCategoryPage = ({ params }: { params: { name: string } }) => {
   const searchParams = useSearchParams();
   const path = usePathname();
   const s = searchParams.get("search");
-  const page = searchParams.get("search") || "1";
+  const page = searchParams.get("page") || "1";
   const sortBy = searchParams.get("sortBy");
-  const { data, isLoading } = useSWR<{ products: Product[]; pagination: Pagination }>(
-    `/products/category/${params.name}?limit=10&page=${page}${s ? `&search=${s}` : ""}${
-      sortBy ? `&sortBy=${sortBy}` : ""
-    }`,
+  const { data, isLoading } = useSWR<{
+    products: Product[];
+    pagination: Pagination;
+  }>(
+    `/products/category/${params.name}?limit=10&page=${page}${
+      s ? `&search=${s}` : ""
+    }${sortBy ? `&sortBy=${sortBy}` : ""}`,
     fetcher
   );
   return (
@@ -37,16 +41,17 @@ const ProductsCategoryPage = ({ params }: { params: { name: string } }) => {
         ) : (
           <>
             {isLoading ? (
-              <p>Loading...</p>
+              <Loading />
             ) : (
               <div>
                 product not found for category{" "}
-                <span className="text-lg">{`"${decodeURI(path.split("/")[3])}"`}</span>
+                <span className="text-lg">{`"${decodeURI(
+                  path.split("/")[3]
+                )}"`}</span>
               </div>
             )}
           </>
         )}
-        {!isLoading && !data?.products && s ? <p>no result for {s}</p> : null}
       </div>
     </>
   );

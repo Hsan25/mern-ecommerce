@@ -19,23 +19,20 @@ const CarouselPromotion = () => {
   return (
     <Carousel
       plugins={[AutoScroll({ active: true, playOnInit: true })]}
-      className="w-full  sm:max-w-xs  h-full">
+      className="w-full  sm:max-w-xs  h-full"
+    >
       <CarouselContent>
-        {/* {promotions?.map((p, idx) => ( */}
         <CarouselItem>
-          <div className="border-2 h-full w-full sm:h-64 sm: flex justify-center items-center border-foreground">
+          <div className="border-2 bg-black rounded h-full w-full sm:h-64 sm: flex justify-center items-center border-foreground">
             {t("discount")}
           </div>
         </CarouselItem>
         <CarouselItem>
-          <div className="border-2 h-full w-full sm:h-64 sm: flex justify-center items-center border-foreground">
+          <div className="border-2 bg-black h-full rounded w-full sm:h-64 sm: flex justify-center items-center border-foreground">
             {t("shipping")}
           </div>
         </CarouselItem>
-        {/* ))} */}
       </CarouselContent>
-      {/* <CarouselPrevious /> */}
-      {/* <CarouselNext /> */}
     </Carousel>
   );
 };

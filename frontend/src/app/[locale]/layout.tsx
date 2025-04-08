@@ -27,23 +27,21 @@ export default async function RootLayout({
 }>) {
   const messages = await getMessages();
   return (
-    <html lang={params.locale} className="dark">
-      <body className={roboto_mono.className}>
-        <NextIntlClientProvider messages={messages}>
-          <AuthContextProvider>
-            <OrderContextProvider>
-              <SWRProvider>
-                <Navbar />
-                <main className="container pt-8 md:px-10 lg:px-24">
-                  {children}
-                </main>
-                <Toaster />
-                <Footer />
-              </SWRProvider>
-            </OrderContextProvider>
-          </AuthContextProvider>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    // <html lang={params.locale} className="dark">
+    //   <body className={roboto_mono.className}>
+    <NextIntlClientProvider messages={messages}>
+      <AuthContextProvider>
+        <OrderContextProvider>
+          <SWRProvider>
+            <Navbar />
+            <main className="container pt-8 md:px-10 lg:px-24">{children}</main>
+            <Toaster />
+            <Footer />
+          </SWRProvider>
+        </OrderContextProvider>
+      </AuthContextProvider>
+    </NextIntlClientProvider>
+    //   </body>
+    // </html>
   );
 }

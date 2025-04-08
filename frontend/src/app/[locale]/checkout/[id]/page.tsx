@@ -9,6 +9,7 @@ import Image from "next/image";
 import { calculateTaxPrice, formatIDR } from "@/utils";
 import FormCheckOut from "@/components/Form/FormCheckout";
 import { useOrder } from "@/context/orderContext";
+import Loading from "@/components/Loading";
 // cart id (for address products)
 interface Props {
   params: {
@@ -20,7 +21,7 @@ const CartItems = ({ cart }: { cart: CartItem }) => {
   return (
     <div className="flex gap-2" key={cart._id}>
       <div className="relative w-16 h-16 border border-foreground">
-        <Image src={cart.product.images[0]} alt={"Image product"} fill />
+        <Image src={cart.product.images[0].url} alt={"Image product"} fill />
       </div>
       <div className="">
         <div className="text-sm">{cart.product.name}</div>
@@ -50,7 +51,7 @@ const CheckOutPage = ({ params }: Props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loading />;
   if (!data) return <p>Error</p>;
   return (
     <>
@@ -72,7 +73,7 @@ const CheckOutPage = ({ params }: Props) => {
                 <div className="flex gap-2" key={c._id}>
                   <div className="relative min-w-16 h-16 border border-foreground">
                     <Image
-                      src={c.product.images[0]}
+                      src={c.product.images[0].url}
                       alt={"Image product"}
                       fill
                     />
@@ -102,7 +103,7 @@ const CheckOutPage = ({ params }: Props) => {
                       data.items.reduce(
                         (a, b) => a + calculateTaxPrice(b.totalPrice),
                         0
-                      ) || 0
+                      )
                     )}
                   </>
                 </span>
@@ -120,7 +121,9 @@ const CheckOutPage = ({ params }: Props) => {
             </div>
           </div>
         </div>
+
         <FormCheckOut />
+
         <div className="border hidden lg:block p-6 min-h-screen fixed right-0 border-foreground min-w-[30rem]">
           <div className="flex  p-1 border border-foreground max-h-[70vh] overflow-y-auto min-h-[70vh] flex-col gap-3 pt-7">
             {data.items.map((c, idx) => (
@@ -157,7 +160,11 @@ const CheckOutPage = ({ params }: Props) => {
               <span>
                 <>
                   {formatIDR(
-                    data.items.reduce((a, b) => a + b.totalPrice, 0) || 0
+                    data.items.reduce(
+                      (a, b) =>
+                        a + b.totalPrice + calculateTaxPrice(b.totalPrice),
+                      0
+                    ) || 0
                   )}
                 </>
               </span>

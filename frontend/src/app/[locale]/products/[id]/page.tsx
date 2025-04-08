@@ -1,8 +1,9 @@
 "use client";
 import AlertDialog from "@/components/AlertDialog";
+import Loading from "@/components/Loading";
 import OtherProducts from "@/components/OtherProducts";
 import Rating from "@/components/Product/Rating";
-import ReviewsProducts from "@/components/ReviewProduct/ReviewProduct";
+import ReviewsProducts from "@/components/Product/ReviewProduct";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { useAuth } from "@/context/authContext";
@@ -28,6 +29,15 @@ const ProductDetailPage = ({ params }: Props) => {
   const { user, isAuthenticate } = useAuth();
   const { push } = useRouter();
   const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const {
+    data: product,
+    isLoading,
+    error,
+  } = useSWR<Product>(
+    `/products/${params.id}`,
+    async (url: string) => await fetcher(url, "product")
+  );
+  
   const handleAddCart = async (id: string) => {
     setLoadingAddCart(true);
     if (!isAuthenticate) {
@@ -61,15 +71,7 @@ const ProductDetailPage = ({ params }: Props) => {
       setLoadingAddCart(false);
     }
   };
-  const {
-    data: product,
-    isLoading,
-    error,
-  } = useSWR<Product>(
-    `/products/${params.id}`,
-    async (url: string) => await fetcher(url, "product")
-  );
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loading />;
   if (error) return <p>Error...</p>;
   if (!product) return <p>Product Not Found</p>;
   return (
@@ -80,24 +82,27 @@ const ProductDetailPage = ({ params }: Props) => {
         onCancel={() => setOpenDialog(false)}
         onContinue={() => push("/auth/login")}
       />
-      <div className="grid-cols-1 md:grid-cols-2 grid gap-5 w-full min-h-screen">
-        <div className="w-full h-80 relative rounded-md border-foreground border-2">
+      <div className="grid-cols-1  md:grid-cols-2 grid gap-5 w-full min-h-screen">
+        <div className="w-full bg-black relative min-h-60 rounded-md border-foreground border-2">
           <Image
-            src={product?.images[0] || ""}
+            src={product?.images[0].url || ""}
             alt="image product"
             fill={true}
           />
         </div>
-        <div className="w-full rounded-md p-2 relative flex flex-col gap-2 min-h-80 h-full border-foreground border-2">
+        <div className="w-full bg-black rounded-md p-2 relative flex flex-col gap-2 min-h-80 h-full border-foreground border-2">
           <div className="flex justify-between gap-1 items-start">
             <div className="text-xl">{product?.name}</div>
             <Rating rating={product?.ratings} />
           </div>
+          <div className="text-sm md:text-base">
+            {formatIDR(product?.price || 0)}
+          </div>
           <div className="text-sm">
             stock:<span>{product?.stock}</span>
           </div>
-          <div className="text-sm md:text-base">
-            {formatIDR(product?.price || 0)}
+          <div className="text-sm">
+            sold:<span>{product?.sold_count}</span>
           </div>
           <div className="text-sm">
             <span>Categories: </span>
@@ -118,7 +123,7 @@ const ProductDetailPage = ({ params }: Props) => {
             onClick={() => handleAddCart(product?._id || "")}
             className=" w-60 mx-auto self-baseline "
           >
-            {loadingAddCart ? "added..." : "Add To Cart"}
+            {loadingAddCart ? "added..." : "add to cart"}
           </Button>
         </div>
         <ReviewsProducts id={product?._id || ""} />

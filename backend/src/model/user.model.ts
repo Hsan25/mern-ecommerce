@@ -1,22 +1,30 @@
-import { removeImage } from "@utils/removeFile";
 import { Role } from "../constants";
 import mongoose from "mongoose";
 import { Cart, CartItem } from "./cart.model";
 import reviewModel from "./review.model";
 import productModel from "./product.model";
 import addressModel from "./address.model";
+import { deleteImage } from "lib/cloudinary";
 const SchemaUser = new mongoose.Schema(
   {
     username: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    password: { type: String, default: null },
     email: { type: String, required: true, unique: true },
-    avatar: { type: String, default: null },
+    avatar: {
+      id: { type: String, default: null },
+      url: { type: String, default: null },
+    },
     role: { type: String, default: Role.USER, enum: [Role.USER, Role.ADMIN] },
+    provider: {
+      type: String,
+      default: "credentials",
+      enum: ["google", "credentials"],
+    },
     refreshToken: {
       type: String,
       default: null,
       select: false,
-    }
+    },
   },
   { timestamps: true },
 );
@@ -31,8 +39,8 @@ SchemaUser.post("save", async (doc) => {
 SchemaUser.post("findOneAndDelete", async (doc) => {
   if (doc) {
     // delete avatar
-    if (doc.avatar) {
-      await removeImage(doc.avatar.split("/").pop());
+    if (doc.avatar.id) {
+      await deleteImage(doc.avatar.id);
     }
     // delete carts
     const cart = await Cart.findOneAndDelete({ user: doc._id });
@@ -60,17 +68,5 @@ SchemaUser.post("findOneAndDelete", async (doc) => {
     }
   }
 });
-// on update
-SchemaUser.pre("updateOne", async function (next) {
-  const update: any = this.getUpdate();
-  if (update.avatar) {
-    const docToUpdate = await this.model.findOne(this.getQuery()).exec();
-    const filename = docToUpdate.avatar
-      ? docToUpdate.avatar.split("/").pop()
-      : null;
-    filename ? await removeImage(filename) : next();
-  }
-  // await removeImage(update.avatar.split('/')[4]);
-  next();
-});
+
 export default mongoose.model("User", SchemaUser);

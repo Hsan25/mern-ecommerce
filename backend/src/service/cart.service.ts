@@ -10,13 +10,12 @@ export const addItemCart = async (
   try {
     let cart = await Cart.findOne({ user }, "items");
     if (!cart) {
-      if (!cart) {
-        // If the cart does not exist, create a new one
-        cart = new Cart({
-          user,
-          items: [],
-        });
-      }
+      // If the cart does not exist, create a new one
+      cart = new Cart({
+        user,
+        items: [],
+      });
+      await cart.save();
     }
     const product = await productModel.findById(productId, "price stock");
     if (!product) throw new Error("Product not found");
@@ -54,7 +53,7 @@ export const addItemCart = async (
     if (!doc) throw new Error("cart not found");
     return doc;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -83,7 +82,7 @@ export const updateItemCart = async (
     if (cart.modifiedCount == 0) throw new Error("cart item not found");
     return cart.modifiedCount;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -125,7 +124,7 @@ export const getCartByUserId = async (id: Types.ObjectId) => {
     if (!docs) throw new Error("user not found");
     return docs;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw new Error("user not found");
   }
 };
@@ -152,7 +151,7 @@ export const getCartById = async (id: Types.ObjectId) => {
     if (!docs) throw new Error("user not found");
     return docs;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw new Error("user not found");
   }
 };

@@ -18,6 +18,7 @@ import {
 import { formatDate, formatIDR } from "@/utils";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
+import Loading from "@/components/Loading";
 interface Props {
   params: {
     id: string;
@@ -55,46 +56,59 @@ const DetailOrderPage = ({ params }: Props) => {
     async (url: string) => await fetcher(url, "order")
   );
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading ) return <Loading />;
+  if(!order) return <p>Product not found</p>
   return (
     <>
-      {!isLoading && order ? (
-        <DialogWrapper
-          defaultOpen={true}
-          onOpenChange={(e) => {
-            push("/dashboard/orders");
-          }}>
-          <DialogContent className="sm:max-w-[450px] z-50 max-h-full overflow-auto">
-            <DialogHeader>
-              <DialogTitle>Order Detail</DialogTitle>
-            </DialogHeader>
-            <div className="grid gap-4 py-4 overflow-auto">
-              <RenderDetail label={"id"} value={order["_id"]} />
-              <RenderDetail label={"user"} value={order["user"]} />
-              <RenderDetail label={"status"} value={order["status"]} />
-              <RenderDetail label={"shipping price"} value={formatIDR(order["shipping"].price)} />
-              <RenderDetail label={"tax price"} value={formatIDR(order["taxPrice"])} />
-              <RenderDetail label={"total amount"} value={formatIDR(order["totalAmount"])} />
-              <RenderDetail label={"payment method"} value={order["payment"]} />
-              <RenderDetail label={"is paid"} value={order["payment"].isPaid} />
-              <RenderDetail
-                label={"paidAt"}
-                value={formatDate(new Date(order["payment"].paidAt))}
-              />
-              <RenderDetail label={"isDelivered"} value={order["isDelivered"]} />
-              <RenderDetail
-                label={"deliveredAt"}
-                value={formatDate(new Date(order["deliveredAt"]))}
-              />
+      <DialogWrapper
+        defaultOpen={true}
+        onOpenChange={(e) => {
+          push("/dashboard/orders");
+        }}
+      >
+        <DialogContent className="sm:max-w-[450px] z-50 max-h-full overflow-auto">
+          <DialogHeader>
+            <DialogTitle>Order Detail</DialogTitle>
+          </DialogHeader>
+          <div className="grid gap-4 py-4 overflow-auto">
+            <RenderDetail label={"id"} value={order["_id"]} />
+            <RenderDetail label={"user"} value={order["user"]} />
+            <RenderDetail label={"status"} value={order["status"]} />
+            <RenderDetail
+              label={"shipping price"}
+              value={formatIDR(order["shipping"].price)}
+            />
+            <RenderDetail
+              label={"tax price"}
+              value={formatIDR(order["taxPrice"])}
+            />
+            <RenderDetail
+              label={"total amount"}
+              value={formatIDR(order["totalAmount"])}
+            />
+            <RenderDetail
+              label={"payment method"}
+              value={order["payment"].method}
+            />
+            <RenderDetail label={"is paid"} value={order["payment"].isPaid} />
+            <RenderDetail
+              label={"paidAt"}
+              value={formatDate(new Date(order["payment"].paidAt))}
+            />
+            <RenderDetail label={"isDelivered"} value={order["isDelivered"]} />
+            <RenderDetail
+              label={"deliveredAt"}
+              value={formatDate(new Date(order["deliveredAt"]))}
+            />
 
-              <AccordionDetail label="order items" data={order.orderItems} />
-              <AccordionDetail label="shipping address" data={order.shippingAddress} />
-            </div>
-          </DialogContent>
-        </DialogWrapper>
-      ) : (
-        <p>Loading....</p>
-      )}
+            <AccordionDetail label="order items" data={order.orderItems} />
+            <AccordionDetail
+              label="shipping address"
+              data={order.shippingAddress}
+            />
+          </div>
+        </DialogContent>
+      </DialogWrapper>
     </>
   );
 };

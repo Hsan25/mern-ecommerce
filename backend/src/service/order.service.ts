@@ -161,7 +161,7 @@ export const getOrders = async (option: OptionOrder) => {
       totalPage: pages,
     };
   } catch (error: any) {
-    console.log(error);
+    console.error(error);
     throw new Error(error.message);
   }
 };
@@ -205,7 +205,7 @@ export const getOrderByUser = async (
       totalPage: pages,
     };
   } catch (error: any) {
-    console.log(error);
+    console.error(error);
     throw new Error(error.message);
   }
 };
@@ -224,7 +224,7 @@ export const getOrderById = async (id: Types.ObjectId) => {
 
     return doc;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw new Error("Failed Fetch Order");
   }
 };

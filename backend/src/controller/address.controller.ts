@@ -21,7 +21,7 @@ const AddressController = {
       response(res, 201, "success create address", { address });
     } catch (error: any) {
       if (error instanceof z.ZodError) {
-        console.log(error);
+        console.error(error);
         response(
           res,
           400,

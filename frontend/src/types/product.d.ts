@@ -6,3 +6,8 @@ export interface FormFieldProduct {
   categories: string[];
   ratings: number;
 }
+
+export interface Images {
+  id: string;
+  url: string;
+}

@@ -80,7 +80,7 @@ const Dialog = ({ open, setOpen, product, itemId }: Props) => {
           </DialogHeader>
           <div className="flex gap-3 my-2">
             <div className="relative min-w-16 sm:min-w-20 h-14 sm:h-20 rounded border-rounded">
-              <Image src={product.images[0]} fill alt={product.name} />
+              <Image src={product.images[0].url} fill alt={product.name} />
             </div>
             <div className="flex flex-col">
               <Link

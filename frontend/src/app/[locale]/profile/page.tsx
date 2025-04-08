@@ -1,6 +1,8 @@
 "use client";
-// import { logout } from "@/action";
+import AlertDialog from "@/components/AlertDialog";
+import ChangeLanguage from "@/components/ChangeLanguange";
 import InputLabel from "@/components/InputLabel";
+import Loading from "@/components/Loading";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
@@ -16,7 +18,7 @@ const ProfileSchema = z.object({
   username: z
     .string()
     .min(5, "min characters 5")
-    .max(20, "The maximum username characters is 20"),
+    .max(15, "The maximum username characters is 15"),
   email: z.string().email().optional(),
 });
 
@@ -24,20 +26,22 @@ type Profile = z.infer<typeof ProfileSchema>;
 const ProfilePage = () => {
   const { user, logout } = useAuth();
   const { toast } = useToast();
-  const { refresh } = useRouter();
-  const { register, handleSubmit, getValues, setValue, control } =
-    useForm<Profile>();
+  const { register, handleSubmit, getValues, setValue } = useForm<Profile>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
+  const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const { back } = useRouter();
   const [file, setFile] = useState<MediaSource | Blob | undefined>(undefined);
-  const onSubmit = async (data: any) => {
-    console.log(data);
+  const [open, setOpen] = useState<boolean>(false); //dialog logout
+  const onSubmit = async (data: Profile) => {
+    setIsLoading(true);
     try {
-      setIsLoading(false);
+      const parse = ProfileSchema.parse(data);
       const res = await apiService.put(
         `/users/${user?._id}`,
         {
-          user: data,
+          user: parse,
           avatar: file || null,
         },
         {
@@ -46,18 +50,16 @@ const ProfilePage = () => {
           },
         }
       );
-      if (res.status == 200) {
-        toast({
-          title: "notif",
-          description: "success update user",
-        });
-        setIsEdit(false);
-        refresh();
-      }
-    } catch (error) {
+      toast({
+        title: "notif",
+        description: "success update user",
+      });
+      setIsEdit(false);
+    } catch (error: any) {
       if (error instanceof z.ZodError) {
         setError(error.issues[0].path[0] + ": " + error.issues[0].message);
       } else {
+        setError(error.response.data.msg);
         toast({
           title: "notif",
           description: "failed update user",
@@ -67,20 +69,25 @@ const ProfilePage = () => {
       setIsLoading(false);
     }
   };
-  const [isEdit, setIsEdit] = useState<boolean>(false);
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-  const { back } = useRouter();
-  if (!user) return <p>Loading...</p>;
+
+  if (!user) return <Loading />;
   return (
     <>
+      <AlertDialog
+        onContinue={logout}
+        description="apakah anda yakin ingin logout?"
+        open={open}
+        onCancel={() => setOpen(false)}
+      />
       <div className="w-full px-2 md:px-10 p-4 max-w-lg border-rounded min-h-96 mx-auto">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className=" flex pb-3 flex-col gap-4">
             <div className="flex justify-between items-center">
               <div className="text-lg">Profile User</div>
+              <ChangeLanguage />
               <Button
                 size={"sm"}
-                onClick={() => logout()}
+                onClick={() => setOpen(!open)}
                 variant={"destructive"}
               >
                 Logout
@@ -124,20 +131,24 @@ const ProfilePage = () => {
             <div className="mx-auto my-3">
               <div className="text-center">Avatar</div>
               <div className="relative w-32 h-32 border-rounded">
-                {user.avatar || file ? (
+                {user.avatar.url || file ? (
                   <Image
-                    src={file ? URL.createObjectURL(file) : user.avatar || ""}
+                    src={
+                      file ? URL.createObjectURL(file) : user.avatar.url || ""
+                    }
                     alt={"avatar user"}
                     fill
                   />
-                ) : <p className="text-center text-sm">no avatar</p>}
+                ) : (
+                  <p className="text-center text-sm">no avatar</p>
+                )}
               </div>
               {isEdit ? (
                 <Button
                   className="relative my-2 max-w-32 text-sm block"
                   size={"sm"}
                 >
-                  {user.avatar || file ? "Change Avatar" : "Add Avatar"}
+                  {user.avatar.url || file ? "Change Avatar" : "Add Avatar"}
                   <Input
                     type="file"
                     onChange={(e) => {

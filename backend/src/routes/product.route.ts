@@ -10,8 +10,18 @@ router.get("/", productController.getProducts);
 router.get("/:id", productController.getProductById);
 router.get("/category/:category", productController.getProductsByCategory);
 // only admin or seller
-router.put("/:id", verifyAdmin, productController.updateProduct);
-router.post("/", verifyAdmin, productController.createProduct);
+router.put(
+  "/:id",
+  verifyAdmin,
+  upload.single("image"),
+  productController.updateProduct,
+);
+router.post(
+  "/",
+  verifyAdmin,
+  upload.single("image"),
+  productController.createProduct,
+);
 router.delete("/:id", verifyAdmin, productController.deleteProduct);
 // review
 router.post("/:id/reviews", verifyUser, ReviewController.addReview);

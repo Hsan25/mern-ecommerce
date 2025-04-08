@@ -7,35 +7,23 @@ import { useToast } from "@/components/ui/use-toast";
 import { z } from "zod";
 import SelectCustom from "@/components/SelectCustom";
 import InputLabel from "@/components/InputLabel";
-import { Register, useAuth } from "@/context/authContext";
+import { useAuth } from "@/context/authContext";
+import { Signup } from "@/types";
+import signupSchema from "@/lib/zod/schemaSignup";
 
 const FormAddUser = () => {
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { toast } = useToast();
-  const { register: RegisterUser } = useAuth();
+  const { signup: RegisterUser } = useAuth();
   const [role, setRole] = useState<"ADMIN" | "USER">("USER");
-  const { register, handleSubmit, reset } = useForm<Register>();
-  const registeSchema = z.object({
-    username: z
-      .string()
-      .min(5, { message: "must contain at least 5 character(s)" }),
-    email: z
-      .string()
-      .min(1, { message: "This field has to be filled." })
-      .email("Invalid Email"),
-    password: z
-      .string()
-      .min(6, { message: "must contain at least 6 character(s)" }),
-    role: z.enum(["ADMIN", "USER"]),
-  });
+  const { register, handleSubmit, reset } = useForm<Signup>();
 
-  const onSubmit: SubmitHandler<Register> = async (data) => {
-    console.log({ ...data, role });
+  const onSubmit: SubmitHandler<Signup> = async (data) => {
     try {
       setIsLoading(true);
       await delay(500);
-      const safe = registeSchema.parse({ ...data, role });
+      const safe = signupSchema.parse({ ...data, role });
       const result = await RegisterUser(safe);
       reset();
       setError("");

@@ -17,6 +17,7 @@ import InputLabel from "@/components/InputLabel";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/components/ui/use-toast";
 import apiService from "@/lib/axios";
+import Loading from "@/components/Loading";
 
 interface ShippingMethod {
   type: string;
@@ -51,8 +52,8 @@ const DashboardUpdateShippingMethodPage = ({ params: { id } }: { params: { id: s
       push("/dashboard/shipping-method");
     }
   };
-  if (loadingData) return <p>Loading...</p>;
-  if (!data) return <p>Error...</p>;
+  if (loadingData) return <Loading/>;
+  if (!data) return <p>not found</p>;
   return (
     <>
       <DialogWrapper

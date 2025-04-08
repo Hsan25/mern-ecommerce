@@ -3,6 +3,9 @@ import { IoLanguage } from "react-icons/io5";
 import { Button } from "./ui/button";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import SelectCustom from "./SelectCustom";
+import { getLocale } from "next-intl/server";
+import { useTranslations } from "next-intl";
 const langs = [
   {
     lang: "ID",
@@ -13,23 +16,25 @@ const langs = [
     locale: "en",
   },
 ];
-const ChangeLanguange = () => {
+const ChangeLanguage = () => {
   const path = usePathname();
-  // console.log(path.splice(2));
   const [openLang, setOpenLang] = useState<boolean>(false);
+  const t = useTranslations();
   return (
     <div className="relative">
       <div
         className={`${
           openLang ? "flex" : "hidden"
-        } absolute -left-16 bg-black border-rounded flex-col`}>
+        } absolute -left-16 bg-black border-rounded flex-col`}
+      >
         {langs.map((l, idx) => (
           <Link
             className="text-sm p-2 text-white hover:bg-slate-50/30"
             key={idx}
             onClick={() => setOpenLang(false)}
             href={[`/${l.locale}`, ...path.split("/").splice(2)].join("/")}
-            locale={l.locale}>
+            locale={l.locale}
+          >
             {l.lang}
           </Link>
         ))}
@@ -38,11 +43,13 @@ const ChangeLanguange = () => {
         onClick={() => setOpenLang(!openLang)}
         size={"sm"}
         className="border"
-        variant={"ghost"}>
+        variant={"ghost"}
+      >
+        {/* {t('changeLanguage')} */}
         <IoLanguage size={20} />
       </Button>
     </div>
   );
 };
 
-export default ChangeLanguange;
+export default ChangeLanguage;

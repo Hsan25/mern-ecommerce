@@ -1,14 +1,14 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-import router from "./routes";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import "lib/cron";
+dotenv.config();
+import router from "./routes";
 import helmet from "helmet";
 import { rateLimit } from "express-rate-limit";
 import morgan from "morgan";
-dotenv.config();
 const app = express();
 
 const limiter = rateLimit({
@@ -25,7 +25,7 @@ app.use(
   cors({
     credentials: true,
     methods: ["GET", "HEAD", "PUT", "POST", "DELETE"],
-    origin: ["http://localhost:3000", "http://192.168.252.148:3000"],
+    origin: [process.env.CLIENT_URL || ""],
   }),
 );
 app.use(helmet());
@@ -36,7 +36,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use("/images", express.static("public/uploads"));
+app.use("/public", express.static("public/"));
 app.use("/api", router);
 
 export default app;

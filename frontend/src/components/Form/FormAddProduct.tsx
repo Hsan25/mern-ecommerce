@@ -17,6 +17,7 @@ import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { FormFieldProduct } from "@/types/product";
 import { schemaProduct } from "@/lib/zod/schemaProduct";
+import Loading from "../Loading";
 const FormAddProduct = () => {
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -71,7 +72,7 @@ const FormAddProduct = () => {
     }
   };
 
-  if (loadingCategories) return <p>Loading...</p>;
+  if (loadingCategories) return <Loading/>;
   return (
     <>
       <form

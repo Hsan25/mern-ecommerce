@@ -10,6 +10,7 @@ import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import useSWR from "swr";
 import Dialog from "@/components/Dialog";
+import Loading from "@/components/Loading";
 interface Props {
   params: {
     id: string;
@@ -19,7 +20,6 @@ const DetailOrderPage = ({ params }: Props) => {
   const {
     data: order,
     isLoading,
-    error,
   } = useSWR<OrderDetail>(
     `/orders/${params.id}`,
     async (url: string) => await fetcher(url, "order")
@@ -28,8 +28,7 @@ const DetailOrderPage = ({ params }: Props) => {
     useState<boolean>(false);
   const { back, push } = useRouter();
   const path = usePathname();
-  if (isLoading && !order) return <p>Loading...</p>;
-  // if (error) return <p>Error...</p>;
+  if (isLoading && !order) return <Loading />;
   if (!order) return <p>Order not found</p>;
   return (
     <>
@@ -48,7 +47,7 @@ const DetailOrderPage = ({ params }: Props) => {
                 <div className="flex gap-3">
                   <div className="relative min-w-16 sm:min-w-20 h-14 sm:h-20 rounded border-rounded">
                     <Image
-                      src={ord.product.images[0]}
+                      src={ord.product.images[0].url}
                       fill
                       alt={ord.product.name}
                     />
@@ -211,7 +210,6 @@ const DetailOrderPage = ({ params }: Props) => {
                 Pay
               </Button>
             )}
-
           </div>
         </div>
       </div>

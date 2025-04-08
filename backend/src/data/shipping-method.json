@@ -1,10 +1,12 @@
 [
   {
     "type": "Ekonomi",
-    "price": 10000
+    "price": 10000,
+    "estimate": "8 day"
   },
   {
     "type": "Regular",
-    "price": 15000
+    "price": 15000,
+    "estimate": "5 day"
   }
 ]

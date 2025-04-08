@@ -6,13 +6,14 @@ import useSWR from "swr";
 import { FaPlus } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
 import { Category } from "@/types";
+import Loading from "@/components/Loading";
 const DashboardCategoriesPage = () => {
   const { data, isLoading } = useSWR<{ categories: Category[] }>(
     "/categories",
     fetcher
   );
   const { push } = useRouter();
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loading />;
   return (
     <>
       <div className="text-lg font-semibold">Categories</div>
@@ -29,18 +30,14 @@ const DashboardCategoriesPage = () => {
           <div key={idx} className="p-2 border-rounded flex flex-col gap-3">
             <div className="flex gap-2">
               <Button
-                onClick={() =>
-                  push(`/dashboard/categories/delete/${sm._id}`)
-                }
+                onClick={() => push(`/dashboard/categories/delete/${sm._id}`)}
                 variant={"destructive"}
                 size={"xs"}
               >
                 Delete
               </Button>
               <Button
-                onClick={() =>
-                  push(`/dashboard/categories/update/${sm._id}`)
-                }
+                onClick={() => push(`/dashboard/categories/update/${sm._id}`)}
                 variant={"default"}
                 size={"xs"}
               >

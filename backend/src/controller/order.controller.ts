@@ -18,18 +18,18 @@ const OrderController = {
       const body: OrderBody = req.body;
       const user = req.user;
       if (!user) return response(res, 401);
-      const newOrder = await createNewOrder(user.id, {
+      const newOrder = await createNewOrder(user._id, {
         ...body,
         shippingAddress: {
           ...body.shippingAddress,
-          user: user.id,
+          user: user._id,
         },
       });
       response(res, 201, "Success create new order", {
         id: newOrder._id,
       });
     } catch (error: any) {
-      console.log(error)
+      console.error(error);
       if (error instanceof Error) {
         return response(res, 400, error.message);
       }
@@ -67,7 +67,7 @@ const OrderController = {
       const order = await updateOrder(new Types.ObjectId(orderId), { ...body });
       response(res, 200, "Success update order");
     } catch (error: any) {
-      console.log(error)
+      console.error(error);
       if (error instanceof z.ZodError) {
         response(
           res,
@@ -79,6 +79,7 @@ const OrderController = {
       response(res, 400, error.message);
     }
   },
+  // admin
   getOrders: async (req: Request, res: Response) => {
     const { page, limit, search } = req.query;
     const LIMIT = Number(limit) || 10;
@@ -97,7 +98,7 @@ const OrderController = {
         },
       });
     } catch (error: any) {
-      console.log(error)
+      console.error(error);
       response(res, 400, error.message || "failed fetch orders", null);
     }
   },
@@ -127,7 +128,7 @@ const OrderController = {
         },
       });
     } catch (error: any) {
-      console.log(error)
+      console.error(error);
       response(res, 400, error.message || "failed fetch orders", null);
     }
   },
@@ -137,7 +138,7 @@ const OrderController = {
       const order = await getOrderById(new Types.ObjectId(id));
       response(res, 200, "success fetch order", { order });
     } catch (error) {
-      console.log(error)
+      console.error(error);
       response(res, 400, "failed fetch order", null);
     }
   },

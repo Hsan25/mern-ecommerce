@@ -25,7 +25,7 @@ const categoryController = {
       });
     } catch (error: any) {
       if (error instanceof z.ZodError) {
-        console.log(error);
+        console.error(error);
         response(res, 400, "name: " + error.issues[0].message);
         return;
       }

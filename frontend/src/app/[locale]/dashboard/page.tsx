@@ -1,4 +1,5 @@
 "use client";
+import Loading from "@/components/Loading";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/authContext";
 import { fetcher } from "@/lib/fetcher";
@@ -26,7 +27,7 @@ const DashboardPage = () => {
   );
   const { push } = useRouter();
 
-  if ((isLoading && !data) || !user) return <p>Loading...</p>;
+  if ((isLoading && !data) || !user) return <Loading />;
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 items-center w-full ">

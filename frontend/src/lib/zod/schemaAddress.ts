@@ -6,7 +6,7 @@ export const schemaAddress = z.object({
   address: z.string().min(10).max(200),
   city: z.string().min(3).max(40),
   state: z.string(),
-  zipCode: z.string().min(6).max(8),
+  zipCode: z.string().min(5).max(6),
   country: z.string(),
   phoneNumber: z.string().min(11).max(13),
   notes: z.string().max(200).optional(),

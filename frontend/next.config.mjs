@@ -10,6 +10,14 @@ const nextConfig = {
         protocol: "http",
         port: "3001",
       },
+      {
+        hostname: "res.cloudinary.com",
+        protocol: "https",
+      },
+      {
+        hostname: "lh3.googleusercontent.com",
+        protocol: "https",
+      },
     ],
   },
 };

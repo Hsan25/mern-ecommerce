@@ -12,6 +12,7 @@ import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import InputLabel from "@/components/InputLabel";
 import SelectCustom from "@/components/SelectCustom";
+import Loading from "../Loading";
 
 interface Props {
   id: string;
@@ -19,9 +20,10 @@ interface Props {
 interface EditBody {
   username: string;
   email: string;
-  role: string;
-  avatar?: string;
+  role?: string;
 }
+
+// dashboard user form admin
 const FormUpdateUser = ({ id }: Props) => {
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -29,7 +31,7 @@ const FormUpdateUser = ({ id }: Props) => {
   const [role, setRole] = useState<"ADMIN" | "USER">("USER");
   const [file, setFile] = useState<Blob | MediaSource | null>(null);
   const [isEdited, setIsEdited] = useState<boolean>(false);
-  const { push, replace } = useRouter();
+  const { push } = useRouter();
   const { data, isLoading: loadingData } = useSWR<User>(
     `/users/${id}`,
     async () => await fetcher(`/users/${id}`, "user")
@@ -37,9 +39,14 @@ const FormUpdateUser = ({ id }: Props) => {
 
   const { register, handleSubmit, reset } = useForm<EditBody>({});
   const userSchema = z.object({
-    username: z.string().min(5, { message: "must contain at least 5 character(s)" }),
-    email: z.string().min(1, { message: "This field has to be filled." }).email("Invalid Email"),
-    role: z.enum(["ADMIN", "USER"]),
+    username: z
+      .string()
+      .min(5, { message: "must contain at least 5 character(s)" }),
+    email: z
+      .string()
+      .min(1, { message: "This field has to be filled." })
+      .email("Invalid Email"),
+    role: z.enum(["ADMIN", "USER"]).optional(),
   });
 
   const onSubmit: SubmitHandler<EditBody> = async (data) => {
@@ -83,13 +90,14 @@ const FormUpdateUser = ({ id }: Props) => {
     }
   };
 
-  if (loadingData || !data) return <p>Loading...</p>;
+  if (loadingData || !data) return <Loading />;
   return (
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
         method="post"
-        className="max-w-sm pt-8 mx-auto flex flex-col gap-3">
+        className="max-w-sm pt-8 mx-auto flex flex-col gap-3"
+      >
         {error && <div className="text-red-600 my-2 text-xs">* {error}</div>}
         <InputLabel
           label={"username"}
@@ -120,14 +128,16 @@ const FormUpdateUser = ({ id }: Props) => {
             onChange={handleChange}
             className="absolute w-full h-full block z-10 opacity-0 inset-0"
           />
-          {file || data.avatar ? (
+          {file || data.avatar.url ? (
             <Image
-              src={file ? URL.createObjectURL(file) : data.avatar || ""}
+              src={file ? URL.createObjectURL(file) : data.avatar.url || ""}
               alt="Avatar"
               fill={true}
             />
           ) : null}
-          <p className="absolute -bottom-5 text-xs">image extension (jpg,jpeg,png)</p>
+          <p className="absolute -bottom-5 text-xs">
+            image extension (jpg,jpeg,png)
+          </p>
         </div>
         <Button type="submit" disabled={isLoading}>
           {isLoading ? "Saving..." : "Save"}

@@ -128,9 +128,9 @@ const TableUser = () => {
                   </Badge>
                 </TableCell>
                 <TableCell>
-                  {user.avatar ? (
+                  {user.avatar.url ? (
                     <div className="relative w-10 h-10">
-                      <Image src={user.avatar} fill={true} alt={"avatar"} />
+                      <Image src={user.avatar.url} fill={true} alt={"avatar"} />
                     </div>
                   ) : (
                     <p>-</p>
@@ -145,7 +145,6 @@ const TableUser = () => {
                   <Button
                     onClick={() => {
                       setOpen(!open);
-                      console.log(user.username);
                       setSelectedUser(user);
                     }}
                     size={"xs"}

@@ -9,6 +9,7 @@ import Image from "next/image";
 import { calculateTaxPrice, formatIDR } from "@/utils";
 import FormCheckOut from "@/components/Form/FormCheckout";
 import { useOrder } from "@/context/orderContext";
+import Loading from "../Loading";
 interface Props {
   id: string;
 }
@@ -17,7 +18,7 @@ const CartItems = ({ cart }: { cart: CartItem }) => {
   return (
     <div className="flex gap-2" key={cart._id}>
       <div className="relative w-16 h-16 border border-foreground">
-        <Image src={cart.product.images[0]} alt={"Image product"} fill />
+        <Image src={cart.product.images[0].url} alt={"Image product"} fill />
       </div>
       <div className="">
         <div className="text-sm">{cart.product.name}</div>
@@ -47,8 +48,8 @@ const CheckOut = ({ id }: Props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
-  if (isLoading) return <p>Loading...</p>;
-  if (!data) return <p>Error</p>;
+  if (isLoading) return <Loading />;
+  if (!data) return <p>cart not found</p>;
   return (
     <>
       <div className="lg:flex justify-between absolute inset-0 min-w-full min-h-full">
@@ -69,7 +70,7 @@ const CheckOut = ({ id }: Props) => {
                 <div className="flex gap-2" key={c._id}>
                   <div className="relative min-w-16 h-16 border border-foreground">
                     <Image
-                      src={c.product.images[0]}
+                      src={c.product.images[0].url}
                       alt={"Image product"}
                       fill
                     />

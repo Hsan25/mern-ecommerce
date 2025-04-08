@@ -23,7 +23,7 @@ export const addReview = async (body: ReviewBody & { cartItem: string }) => {
 
     return newReview;
   } catch (error) {
-    console.log(error);
+    console.error(error);
 
     throw new Error("Failed add reviews");
   }
@@ -49,7 +49,7 @@ export const getReviewsByProduct = async (
       totalPage,
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw new Error("Failed fetch Reviews");
   }
 };
@@ -61,7 +61,7 @@ export const addReviewToProduct = async (
   try {
     await Product.updateOne({ _id: productId }, { $push: { reviews: review } });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw new Error("failed add reviews  ");
   }
 };
@@ -71,7 +71,7 @@ export const deleteReview = async (id: Types.ObjectId) => {
     if (!result.deletedCount) throw new Error("Comment not found");
     return result.deletedCount;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw new Error("Comment not found");
   }
 };

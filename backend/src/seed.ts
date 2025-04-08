@@ -9,7 +9,7 @@ const email = process.env.ADMIN_EMAIL || "admin@gmail.com";
 const password = process.env.ADMIN_PASSWORD || "admin123456";
 const seedAdmin = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URL || "");
+    await mongoose.connect(process.env.MONGO_URI || "");
     const existingAdmin = await User.findOne({ email });
     if (!existingAdmin) {
       const hashedPassword = await bcrypt.hash(password, 10);

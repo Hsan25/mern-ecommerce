@@ -3,7 +3,10 @@ export interface Review {
   user: {
     _id: string;
     username: string;
-    avatar: string;
+    avatar: {
+      id: string | null;
+      url: string | null;
+    };
   };
   rating: number;
   comment: string;

@@ -10,6 +10,7 @@ import { useOrder } from "@/context/orderContext";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { PaymentMethodType } from "@/types/payment";
+import Loading from "../Loading";
 
 const FormPayment = () => {
   const { order, setPayment } = useOrder();
@@ -42,7 +43,7 @@ const FormPayment = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  if (isLoading && !data) return <p>Loading...</p>;
+  if (isLoading && !data) return <Loading />;
   return (
     <form
       onSubmit={onSubmit}

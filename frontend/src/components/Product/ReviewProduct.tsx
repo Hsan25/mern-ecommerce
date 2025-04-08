@@ -9,6 +9,7 @@ import useSWR from "swr";
 import { Button } from "../ui/button";
 import { delay } from "@/lib/utils";
 import Rating from "./Rating";
+import Loading from "../Loading";
 
 const ReviewsProducts = ({ id }: { id: string }) => {
   const [reviews, setReviews] = useState<Review[]>();
@@ -19,7 +20,7 @@ const ReviewsProducts = ({ id }: { id: string }) => {
   }>(`/products/${id}/reviews?page=${page}`, fetcher);
 
   useEffect(() => {
-    if (page > 1) (async () => await delay(500))();
+    if (page > 1) (async () => await delay(300))();
     if (data)
       setReviews((prev) => {
         if (prev) return [...prev, ...data.reviews] as Review[];
@@ -28,9 +29,9 @@ const ReviewsProducts = ({ id }: { id: string }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loading />;
   return (
-    <div className="w-full py-5 p-1 min-h-10 relative rounded-md border-foreground border-2">
+    <div className="w-full bg-black py-5 p-1 min-h-10 relative rounded-md border-foreground border-2">
       <div className="font-semibold text-lg my-2">Reviews Product</div>
       <div className="flex flex-col p-2 gap-3">
         {reviews && reviews.length >= 1 ? (
@@ -41,7 +42,7 @@ const ReviewsProducts = ({ id }: { id: string }) => {
             >
               <div className="w-10 border border-foreground h-9 rounded-full relative">
                 <Image
-                  src={r.user.avatar || "/default-avatar.jpg"}
+                  src={r.user.avatar?.url || "/default-avatar.jpg"}
                   alt={"avatar"}
                   fill
                   className="rounded-full"

@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import apiService from "@/lib/axios";
 import type { Pagination, Product, User } from "@/types";
 import { Button } from "./ui/button";
-import TableSkeleton from "../app/TableSkeleton";
+import TableSkeleton from "./TableSkeleton";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import PaginationProduct from "./Pagination";
 import { useToast } from "./ui/use-toast";
@@ -38,12 +38,12 @@ const TableProduct = () => {
       const res = await apiService.delete(`/products/${id}`);
       toast({
         title: "Delete product success",
-        description: `user with id ${id} deleted.`,
+        description: `product with id ${id} deleted.`,
       });
       window.location.reload();
     } catch (error) {
       toast({
-        title: "Delete user failed",
+        title: "Delete product failed",
       });
       console.error(error);
     }
@@ -86,7 +86,7 @@ const TableProduct = () => {
                 <TableCell className="text-sm max-w-[50px]">
                   <div className="relative w-10 h-10">
                     <Image
-                      src={product.images[0]}
+                      src={product.images[0].url}
                       fill={true}
                       alt={"Image product"}
                     />

@@ -7,7 +7,7 @@ export const createOrder = async (body: NewOrder) => {
     const data = res.data;
     return data.data as { id: string };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw new Error("Failed create order");
   }
 };

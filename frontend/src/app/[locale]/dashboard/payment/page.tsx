@@ -120,7 +120,7 @@ const PaymentDashboardPage = () => {
                         setConfirm(true);
                       }}
                       size={"xs"}
-                      disabled={p.status != "waiting"}
+                      disabled={p.status != "waiting confirmation"}
                       variant={"default"}
                     >
                       Confirm
@@ -128,11 +128,10 @@ const PaymentDashboardPage = () => {
                     <Button
                       onClick={() => {
                         setId(p._id);
-
                         setReject(true);
                       }}
                       size={"xs"}
-                      disabled={p.status != "waiting"}
+                      disabled={p.status != "waiting confirmation"}
                       variant={"destructive"}
                     >
                       Reject

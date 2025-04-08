@@ -18,6 +18,7 @@ import { useForm } from "react-hook-form";
 import { useToast } from "@/components/ui/use-toast";
 import apiService from "@/lib/axios";
 import { Category } from "@/types";
+import Loading from "@/components/Loading";
 
 interface ShippingMethod {
   type: string;
@@ -55,7 +56,7 @@ const DashboardUpdateCategoryPage = ({
       push("/dashboard/categories");
     }
   };
-  if (loadingData) return <p>Loading...</p>;
+  if (loadingData) return <Loading />;
   if (!data) return <p>Error...</p>;
   return (
     <>

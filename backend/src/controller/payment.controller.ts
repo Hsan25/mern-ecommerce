@@ -16,14 +16,13 @@ const PaymentController = {
       const user = req.user;
       const { orderId } = req.params;
       if (!user) return response(res, 400, "auth required");
-       await createPayment({
-        user: user.id,
+      await createPayment({
+        user: user._id,
         orderId: ObjectId(orderId),
-      
       });
       response(res, 201, "success request confirmation");
     } catch (error) {
-      console.log(error)
+      console.error(error);
       response(res, 400, "failed request confirmation");
     }
   },
@@ -32,13 +31,10 @@ const PaymentController = {
       const user = req.user;
       const { paymentId, status } = req.params;
       if (!user) return response(res, 400, "auth required");
-      await updateStatusPayment(
-        ObjectId(paymentId),
-        status as StatusPayment,
-      );
+      await updateStatusPayment(ObjectId(paymentId), status as StatusPayment);
       response(res, 200, "success update status");
     } catch (error) {
-      console.log(error)
+      console.error(error);
       response(res, 400, "failed update status");
     }
   },

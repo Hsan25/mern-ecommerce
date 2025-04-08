@@ -7,7 +7,8 @@ export const verifyToken = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const token = req.headers["authorization"]?.split(" ")[1] || req.body.token as string;
+  const token =
+    req.headers["authorization"]?.split(" ")[1] || (req.body.token as string);
   if (!token) return res.sendStatus(401);
   try {
     jwt.verify(
@@ -22,7 +23,7 @@ export const verifyToken = async (
       },
     );
   } catch (error) {
-    console.log(error)
+    console.error(error);
     return res.sendStatus(401);
   }
 };

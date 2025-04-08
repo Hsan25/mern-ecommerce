@@ -12,6 +12,7 @@ import SelectCustom from "@/components/SelectCustom";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import Loading from "@/components/Loading";
 const OrderPage = () => {
   const { user } = useAuth();
   const path = usePathname();
@@ -27,11 +28,10 @@ const OrderPage = () => {
   const onValueChange = (val: string) => {
     replace(`${path}?status=${val}`);
   };
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loading />;
   if (error) return <p>Error</p>;
   return (
     <>
-      <div className="text-lg">List Order</div>
       <Button
         onClick={() => setOpenFilter(!openFilter)}
         className="my-4 sm:hidden"
@@ -42,7 +42,7 @@ const OrderPage = () => {
         <div
           className={`${
             openFilter ? "!flex" : ""
-          } w-full sm:w-[20rem] my-2 sm:my-0 max-h-[90vh] hidden sm:flex border-rounded p-4 flex-col gap-y-5`}
+          } w-full bg-black sm:w-[20rem] my-2 sm:my-0 max-h-[90vh] hidden sm:flex border-rounded p-4 flex-col gap-y-5`}
         >
           <div className="flex justify-between items-center w-full">
             <div className="">Filter Order</div>
@@ -62,7 +62,7 @@ const OrderPage = () => {
           </div>
         </div>
 
-        <div className="w-full min-h-40  border-rounded p-1 md:p-4 flex flex-col gap-5">
+        <div className="w-full bg-black min-h-40  border-rounded p-1 md:p-4 flex flex-col gap-5">
           {data?.orders && data.orders.length >= 1 ? (
             data.orders.map((ord, idx) => (
               <Link
@@ -79,7 +79,7 @@ const OrderPage = () => {
                 <div className="flex flex-row gap-3 h-full">
                   <div className="relative min-w-16 mx-auto md:mx-0 md:min-w-24 h-16 md:min-h-24 border-rounded ">
                     <Image
-                      src={ord.orderItems[0].product.images[0]}
+                      src={ord.orderItems[0].product.images[0].url}
                       fill
                       alt={"Image product"}
                     />
@@ -106,7 +106,7 @@ const OrderPage = () => {
               </Link>
             ))
           ) : (
-            <p>{s ? "no order for status " + `"${s}"` : "no order"}</p>
+            <p>{s ? "no order for status " + `"${s}"` : "order not found"}</p>
           )}
         </div>
       </div>

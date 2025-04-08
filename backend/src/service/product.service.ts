@@ -86,7 +86,7 @@ export const getProductsByCategory = async (
       ? await Product.find({ categories: c._id })
           .select("-__v -reviews -description -createdAt -updatedAt")
           .populate("categories", "-__v -createdAt")
-          .populate("seller", "-__v -password -email -createdAt -updatedAt")
+          .populate("seller", "username avatar")
           .sort(sort)
           .skip(skip)
           .limit(limit)
@@ -115,7 +115,7 @@ export const getProductById = async (id: Types.ObjectId) => {
     const product = await Product.findById(id)
       .select("-__v -reviews")
       .populate("categories", "-__v -createdAt")
-      .populate("seller", "-__v -password -email -createdAt -updatedAt");
+      .populate("seller", "username avatar");
 
     if (!product) {
       throw new Error(`Product not found with id: ${id}`);

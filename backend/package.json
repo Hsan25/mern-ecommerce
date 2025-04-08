@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "start": "node src/server.js",
     "test": "jest --watchAll --config jest.config.ts --detectOpenHandles ",
     "dev": "nodemon",
     "seed": "ts-node src/seed.ts",
@@ -15,6 +16,7 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
+    "cloudinary": "^2.6.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
@@ -26,6 +28,8 @@
     "morgan": "^1.10.0",
     "multer": "1.4.5-lts.1",
     "node-cron": "^3.0.3",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -40,6 +44,8 @@
     "@types/morgan": "^1.9.9",
     "@types/multer": "^1.4.11",
     "@types/node-cron": "^3.0.11",
+    "@types/passport": "^1.0.17",
+    "@types/passport-google-oauth20": "^2.0.16",
     "@types/supertest": "^6.0.2",
     "cross-env": "^7.0.3",
     "eslint": "^9.9.0",

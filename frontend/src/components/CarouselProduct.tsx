@@ -9,6 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { fetcher } from "@/lib/fetcher";
 import useSWR from "swr";
+import Loading from "./Loading";
 
 const CarouselProduct = () => {
   const { data, isLoading } = useSWR<{
@@ -22,28 +23,37 @@ const CarouselProduct = () => {
   return (
     <Carousel
       plugins={[AutoScroll({ active: true, playOnInit: true })]}
-      className="w-full max-w-2xl h-full"
+      className="w-full max-w-2xl  h-full"
     >
       <CarouselContent>
-        {isLoading ? <p>Loading...</p> : null}
-        {data?.products && data.products.length > 0 ? (
-          data.products?.map((p, idx) => (
-            <CarouselItem key={idx}>
-              <Link
-                href={`/products/${p._id}`}
-                className="border-2 relative h-40 sm:h-64 flex justify-center items-center border-foreground"
-              >
-                <Image src={p.images[0]} alt={"image product"} fill={true} />
-                <div className="absolute z-10 bottom-0 text-sm bg-background/50  p-2">
-                  {p.name}
-                </div>
-              </Link>
-            </CarouselItem>
-          ))
+        {isLoading ? (
+          <Loading />
         ) : (
-          <CarouselItem>
-            {!isLoading && <p>product not available</p>}
-          </CarouselItem>
+          <>
+            {data?.products && data.products.length > 0 ? (
+              data.products.map((p, idx) => (
+                <CarouselItem key={idx}>
+                  <Link
+                    href={`/products/${p._id}`}
+                    className="border-2 rounded bg-black relative h-40 sm:h-64 flex justify-center items-center border-foreground"
+                  >
+                    <Image
+                      src={p.images[0].url}
+                      alt={"image product"}
+                      fill={true}
+                    />
+                    <div className="absolute z-10 bottom-0 text-sm bg-background/50  p-2">
+                      {p.name}
+                    </div>
+                  </Link>
+                </CarouselItem>
+              ))
+            ) : (
+              <CarouselItem>
+                <p>product not available</p>
+              </CarouselItem>
+            )}
+          </>
         )}
       </CarouselContent>
     </Carousel>

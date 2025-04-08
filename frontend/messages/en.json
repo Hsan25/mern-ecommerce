@@ -1,5 +1,5 @@
 {
-  "welcome": "Welcome to website Galaxy Store",
+  "welcome": "Welcome to Galaxy Store",
   "description": "This is an English description.",
   "searchProduct": "search product",
   "promotion": {
@@ -18,5 +18,6 @@
       "fullname": "fullName",
       "shippingAddress": "shipping address"
     }
-  }
+  },
+  "changeLanguage": "changeLanguage"
 }

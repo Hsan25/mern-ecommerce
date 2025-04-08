@@ -1,142 +1,153 @@
-# MERN E-commerce Project
+# Proyek E-commerce MERN
 
-This is a full-stack e-commerce web application built using the MERN stack (MongoDB, Express.js, React, Node.js). The project is divided into two parts:
+Ini adalah aplikasi web e-commerce full-stack yang dibangun menggunakan teknologi MERN (MongoDB,
+Express.js, React, Node.js). Proyek ini terbagi menjadi dua bagian:
 
-    Frontend: Located in the frontend folder, built with React and Next.js.
-    Backend: Located in the backend folder, built with Express.js and MongoDB.
+- **Frontend**: Terletak di folder `frontend`, dibangun dengan React dan Next.js.
+- **Backend**: Terletak di folder `backend`, dibangun dengan Express.js dan MongoDB.
 
-## Table of Contents
+## Daftar Isi
 
-    Prerequisites
-    Installation
-        Clone the Repository
-        Setup Environment Variables
-        Install Dependencies
-    Seeding the Database
-    Running the Application
-    Technologies Used
+1. Prasyarat
+2. Instalasi
+   - Clone Repository
+   - Mengatur Variabel Lingkungan
+   - Menginstal Dependensi
+3. Mengisi Database dengan Data Awal
+4. Menjalankan Aplikasi
+5. Teknologi yang Digunakan
 
-## Prerequisites
+## Prasyarat
 
-Before running the project, ensure you have the following installed on your system:
+Sebelum menjalankan proyek ini, pastikan Anda telah menginstal perangkat lunak berikut di sistem
+Anda:
 
-    Node.js: v14.x or higher
-    pnpm: Used as the package manager
-        You can install it globally using:
-  ``` bash
-   npm install -g pnpm
-```
-    MongoDB: Make sure MongoDB is installed and running locally or use MongoDB Atlas (a cloud-based solution).
+- **Node.js**: Versi 14.x atau lebih tinggi
+- **pnpm**: Digunakan sebagai manajer paket
 
-## Installation
-Clone the Repository
+  Anda dapat menginstalnya secara global dengan perintah berikut:
 
-First, clone this repository to your local machine:
+  ```bash
+  npm install -g pnpm
+  ```
+
+- **MongoDB**: Pastikan MongoDB sudah terinstal dan berjalan secara lokal, atau gunakan MongoDB
+  Atlas sebagai solusi berbasis cloud.
+
+## Instalasi
+
+### Clone Repository
+
+Pertama, klon repository ini ke komputer Anda:
 
 ```bash
 git clone https://github.com/Hsan25/mern-ecommerce.git
 cd mern-ecommerce
 ```
-## Setup Environment Variables
 
-    Create .env files for both the frontend and backend folders.
+### Mengatur Variabel Lingkungan
 
-#### Backend .env Example:
+Buat file `.env` untuk **backend** dan `.env.local` untuk **frontend**.
 
-Create a .env file in the backend folder:
+#### Contoh `.env` untuk Backend:
+
+Buat file `.env` di dalam folder `backend`:
 
 ```bash
 cd backend
 touch .env
 ```
-Fill the .env file with the following content:
 
-```env
-MONGO_URL=mongodb://127.0.0.1:27017/my_ecommerce
-BASE_URL_IMAGE=http://localhost:3001/images
-PORT=3001
-ACCESS_TOKEN_SECRET=YOUR_SECRET
-REFRESH_TOKEN_SECRET=YOUR_SECRET
-ADMIN_EMAIL=admin@gmail.com
-ADMIN_PASSWORD=admin123456
-```
-#### Frontend .env.local Example:
+Isi file `.env` di backend dengan mengikuti file `.env.example`.
 
-Create a .env.local file in the frontend folder:
+
+#### Contoh `.env` untuk Frontend:
+
+Buat file `.env` di dalam folder `frontend`:
 
 ```bash
 cd frontend
 touch .env.local
 ```
+Isi file `.env` di frontend dengan mengikuti file `.env.example`. 
 
-Fill the .env.local file with the following content:
+### Menginstal Dependensi
 
-```env
-NEXT_PUBLIC_SERVER_API=http://localhost:3001/api
-NEXT_PUBLIC_BASE_URL=http://localhost:3000 
-```
-## Install Dependencies
-
-Now, install dependencies for both the frontend and backend. You can do this from the root of the project.
+Sekarang, instal semua dependensi untuk **frontend** dan **backend**. Jalankan perintah berikut dari
+root proyek:
 
 ```bash
-# frontend
- pnpm install:frontend
+# Instal dependensi frontend
+pnpm install:frontend
 
-# backend
- pnpm install:backend
+# Instal dependensi backend
+pnpm install:backend
 ```
-This will install dependencies for both the frontend and backend folders.
-## Seeding the Database
 
-To seed the database with initial data (like creating an admin user), you'll need to run a seed script. The backend should handle this automatically when you start the server.
+## Mengisi Database dengan Data Awal
 
-Ensure that MongoDB is running, and then run the following command inside the backend folder to seed the database:
+Untuk mengisi database dengan data awal (seperti membuat pengguna admin), Anda perlu menjalankan
+skrip seed. Pastikan MongoDB sudah berjalan, lalu jalankan perintah berikut di dalam folder
+`backend`:
 
 ```bash
- pnpm seed
+pnpm seed
 
- # or
- cd backend && pnpm seed
-
+# atau
+cd backend && pnpm seed
 ```
-The seed script will:
 
-    Create an initial admin user using the email and password defined in the .env file.
+Skrip ini akan:
 
-## Running the Application
+- Membuat pengguna admin awal menggunakan email dan kata sandi yang telah didefinisikan dalam file
+  `.env`.
 
-Once everything is set up, you can run both the frontend and backend concurrently using pnpm:
+## Menjalankan Aplikasi
 
-From the root of the project, simply run:
+Setelah semua konfigurasi selesai, Anda bisa menjalankan frontend dan backend secara bersamaan
+menggunakan `pnpm`.
+
+Dari root proyek, jalankan perintah berikut:
 
 ```bash
-# run backend
- pnpm dev:backend
+# Menjalankan backend
+pnpm dev:backend
 
-#run frontend 
- pnpm dev:frontend
+# Menjalankan frontend
+pnpm dev:frontend
 ```
-This will run both the frontend on http://localhost:3000 and the backend on http://localhost:3001.
 
+Aplikasi ini akan berjalan di:
 
+- **Frontend**: `http://localhost:3000`
+- **Backend**: `http://localhost:3001`
 
+## Catatan
 
-## notes 
-To add or edit products and others, you must enter the dashboard page as admin.
+Untuk menambahkan atau mengedit produk dan data lainnya, Anda harus masuk ke halaman dashboard
+sebagai admin:
+
 ```
 http://localhost:3000/id/dashboard
 ```
-view docs backend in url:
 
+Dokumentasi backend dapat diakses melalui URL berikut:
+
+```
 http://localhost:3001/api/docs
+```
 
-*** If you find a problem in this project, please send a report. ***
-## Technologies Used
+**untuk pertama kali menjalankan project ini,pastilah anda akan menerima produk kosong dan segalanya juga. jadi di sarankan untuk menambah data dahulu di dashboard (ADMIN) .**
 
-    Frontend: React, Next.js, TypeScript
-    Backend: Express.js, Node.js, MongoDB, TypeScript
-    State Management: context react
-    Authentication: JWT (JSON Web Token)
-    Database: MongoDB with Mongoose
+**_Jika Anda menemukan masalah dalam proyek ini, silakan kirim laporan._**
 
+## Peringatan
+ **Project ini masih ada celah keamanan, jadi anda harus hati-hati.**
+
+## Teknologi yang Digunakan
+
+- **Frontend**: React, Next.js, TypeScript
+- **Backend**: Express.js, Node.js, MongoDB, TypeScript
+- **Manajemen State**: React Context
+- **Autentikasi**: JWT (JSON Web Token)
+- **Database**: MongoDB dengan Mongoose

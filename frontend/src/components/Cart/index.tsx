@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import CartItems from "./CartItems";
+import Loading from "../Loading";
 
 interface Props {
   open: boolean;
@@ -30,7 +31,7 @@ const CartPage = ({ open, onClose }: Props) => {
     <div
       className={`${
         open ? "-right-0" : "-right-[700px]"
-      } w-full sm:w-96 p-4 py-3 bg-background duration-200 transition-all  sm:border-l sm:border-foreground/30 min-h-screen fixed inset-y-0 z-50 `}
+      } w-full sm:w-96 p-4 py-3 bg-black duration-200 transition-all  sm:border-l sm:border-foreground/30 min-h-screen fixed inset-y-0 z-50 `}
     >
       <div className="flex w-full my-4 items-center justify-between">
         <div className="">Cart</div>
@@ -53,13 +54,13 @@ const CartPage = ({ open, onClose }: Props) => {
               ))
             ) : (
               <p className="text-center absolute inset-0 top-1/2 ">
-                cart mu masih kosong
+                cart is empty
               </p>
             )}
           </div>
         </div>
       ) : (
-        <p>Loading...</p>
+        <Loading />
       )}
 
       <div className="w-full relative  flex flex-col bottom-0">

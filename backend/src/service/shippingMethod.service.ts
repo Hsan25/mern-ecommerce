@@ -10,7 +10,7 @@ export const getShippingMethods = async () => {
     const docs = await shippingMethod.find({}, "type _id price");
     return docs;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw new Error("Failed fetch shipping method");
   }
 };
@@ -19,7 +19,7 @@ export const getShippingMethodById = async (id: Types.ObjectId) => {
     const doc = await shippingMethod.findOne({ _id: id }, "type _id price");
     return doc;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw new Error("Failed fetch shipping method");
   }
 };

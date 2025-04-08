@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isAuthenticated } from "@/action";
 import { intlMiddleware } from "@/middleware";
-import apiService from "../axios";
-import { jwtDecode } from "jwt-decode";
-import { PayloadJWT } from "@/types";
 export async function authMiddleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const path = "/" + pathname.split("/").splice(2).join("/");
@@ -16,24 +13,22 @@ export async function authMiddleware(req: NextRequest) {
       new URL(`/auth/login?redirect=${currentUrl}`, req.url)
     );
   }
-  if (path.startsWith("/checkout")) {
-    try {
-      const cartId = req.nextUrl.pathname.split("/").pop();
-      const decoded = jwtDecode<PayloadJWT>(token);
-      const res = await apiService.get(`/carts/${cartId}/${decoded._id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = res.data.data;
-      //check items cart
-      // if items 0 redirect 
-      if (data.cart.items.length < 1)
-        return NextResponse.redirect(new URL(previosUrl || "/", req.url));
-      return intlMiddleware(req);
-    } catch (error) {
-      return NextResponse.redirect(new URL(previosUrl || "/", req.url));
-    }
-  }
+  // if (path.startsWith("/checkout")) {
+  //   try {
+  //     const cartId = req.nextUrl.pathname.split("/").pop();
+  //     const decoded = jwtDecode<PayloadJWT>(token);
+  //     const res = await apiService.get(`/carts/${cartId}/${decoded._id}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //     const data = res.data.data;
+  //     if (data.cart.items.length < 1)
+  //       return NextResponse.redirect(new URL(previosUrl || "/", req.url));
+  //     return intlMiddleware(req);
+  //   } catch (error) {
+  //     return NextResponse.redirect(new URL(previosUrl || "/", req.url));
+  //   }
+  // }
   return intlMiddleware(req);
 }

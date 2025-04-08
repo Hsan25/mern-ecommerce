@@ -1,6 +1,6 @@
 import { Product } from "@/types";
 import React from "react";
-import CartProduct from "./CardProduct";
+import CardProduct from "./CardProduct";
 
 const ListProduct = ({
   products,
@@ -13,7 +13,7 @@ const ListProduct = ({
     return (
       <div className="flex-col gap-3">
         {products.map((p, idx) => (
-          <CartProduct product={p} key={idx} />
+          <CardProduct product={p} key={idx} />
         ))}
       </div>
     );
@@ -22,7 +22,7 @@ const ListProduct = ({
     <>
       <div className="grid max-h-full gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
         {products.map((p, idx) => (
-          <CartProduct product={p} key={idx} />
+          <CardProduct product={p} key={idx} />
         ))}
       </div>
     </>

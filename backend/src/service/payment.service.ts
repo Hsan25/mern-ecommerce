@@ -18,7 +18,7 @@ export const createPayment = async (body: PaymentBody) => {
     );
     newPayment.save();
   } catch (error) {
-    console.log(error)
+    console.error(error);
     throw new Error("Create payment failed");
   }
 };
@@ -48,7 +48,7 @@ export const updateStatusPayment = async (
     );
     return payment._id;
   } catch (error) {
-    console.log(error)
+    console.error(error);
     throw new Error(
       error instanceof Error ? error.message : "failed update status payment",
     );
@@ -66,7 +66,7 @@ export const getAllPayment = async (option: OptionPayment) => {
       totalPage,
     };
   } catch (error) {
-    console.log(error)
+    console.error(error);
     throw new Error(
       error instanceof Error ? error.message : "Failed fetch paymens",
     );

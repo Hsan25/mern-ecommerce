@@ -27,14 +27,15 @@ const CartItems = ({
     } catch (error) {
       console.log("Failed add quantity");
     }
-    await delay(300);
+    // supaya tidak spam update quantity
+    await delay(300); //delay for waiting update quantity
+    //
     const fetchCart = async () => {
       try {
         const res = await apiService.get(`/carts/${user?._id}`);
         const data = res.data.data;
         setCarts(data.cart as Cart);
       } catch (error) {
-        console.log("Failed fetch cart");
         setCarts(undefined);
       }
     };
@@ -45,9 +46,8 @@ const CartItems = ({
     setIsLoading(true);
     try {
       const res = await apiService.delete(`/carts/${itemId}`);
-      console.log(res);
     } catch (error) {
-      console.log("Failed add quantity");
+      console.log("Failed delete item");
     }
     await delay(100);
     const fetchCart = async () => {
@@ -67,7 +67,7 @@ const CartItems = ({
     <div className="min-h-36 max-h-40 p-2  border w-full gap-3 flex items-start ">
       <div className="relative max-h-full min-w-20 min-h-24 border-2 border-white sm:min-w-24 sm:min-h-24">
         <Image
-          src={cart.product.images[0] || ""}
+          src={cart.product.images[0].url || ""}
           fill={true}
           alt={"cart product"}
         />
@@ -86,7 +86,7 @@ const CartItems = ({
 
         <div className="flex gap-2 items-center">
           <div className="flex gap-[.1rem] items-center">
-            <div className="text-sm">Qty</div>
+            {/* <div className="text-sm">Qty</div> */}
             <Button
               onClick={() => {
                 handleUpdateQuantity(cart._id, cart.quantity - 1);
@@ -108,7 +108,6 @@ const CartItems = ({
             <Button
               onClick={() => {
                 handleUpdateQuantity(cart._id, cart.quantity + 1);
-                setIsLoading(true);
               }}
               size={"xs"}
               variant={"outline"}

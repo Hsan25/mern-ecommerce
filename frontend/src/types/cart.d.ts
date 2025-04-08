@@ -7,7 +7,7 @@ interface CartItem {
     name: string;
     price: number;
     stock: number;
-    images: string;
+    images: Images;
     seller: {
       _id: string;
       username: string;
@@ -21,5 +21,5 @@ interface CartItem {
 
 interface Cart {
   _id: string;
-  items: CartItem[]
+  items: CartItem[];
 }

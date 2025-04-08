@@ -1,22 +1,28 @@
-import apiService from "@/lib/axios";
-import { PayloadJWT } from "@/types";
-import { jwtDecode } from "jwt-decode";
+import axios from "axios";
 import { NextRequest } from "next/server";
-export const isAuthenticated = async (req: NextRequest) => {
-  let token = req.cookies.get("accessToken")?.value || "";
+
+export const isAuthenticated = async (req: NextRequest): Promise<boolean> => {
   try {
-    if (!token) {
-      return false;
-    }
-    const decoded = jwtDecode<PayloadJWT & { exp: number }>(token);
-    const now = Date.now();
-    const exp = decoded.exp * 1000;
-    if (now > exp) {
-      return false;
-    }
-    return true;
-  } catch (error) {
-    console.log(error);
+    const token = req.cookies.get("accessToken")?.value;
+    const refreshToken = req.cookies.get("refreshToken")?.value;
+
+    if (token) return true;
+    if (!refreshToken) return false;
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_SERVER_API}/auth/token`,
+      {
+        withCredentials: true,
+        headers:{
+          Cookie:`refreshToken=${refreshToken}`
+        }
+      }
+    );
+
+
+    // Jika sukses, berarti user berhasil di-autentikasi
+    return res.status === 200;
+  } catch (error: any) {
+    console.error("Middleware Auth Error:", error?.response?.data || error);
     return false;
   }
 };

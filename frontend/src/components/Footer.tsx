@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
+import ChangeLanguage from "./ChangeLanguange";
 
 const option = [
   {
@@ -53,19 +54,21 @@ const Footer = () => {
             <Link
               className="text-blue-600 hover:underline"
               href={"https://hsan25.vercel.app"}
+              target="_blank"
             >
               @Hsan
             </Link>
           </div>
-          <div className="">
+          {/* <div className="">
             Web Reference{" "}
             <Link
               href={"https://demo.vercel.store/"}
               className="text-blue-600 hover:underline"
+              target="_blank"
             >
               web.
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

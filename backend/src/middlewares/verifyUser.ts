@@ -7,7 +7,8 @@ export const verifyUser = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const token = req.headers["authorization"]?.split(" ")[1] || req.body.token as string;
+  const token =
+    req.headers["authorization"]?.split(" ")[1] || (req.body.token as string);
   if (!token) return res.sendStatus(401);
   try {
     jwt.verify(
@@ -20,18 +21,27 @@ export const verifyUser = async (
         }
         const user = await getUserById(decoded._id);
         if (!user) return res.sendStatus(401);
-        req.user = {
-          avatar: user.avatar,
-          id: user._id,
-          email: user.email,
-          role: user.role,
-          username: user.username,
-        };
+        if (req.user?.role == "ADMIN") {
+          req.user = {
+            avatar: user?.avatar ?? { url: null, id: null },
+            _id: user._id,
+            email: user.email,
+            username: user.username,
+            role: user.role,
+          };
+        } else {
+          req.user = {
+            avatar: user?.avatar ?? { url: null, id: null },
+            _id: user._id,
+            email: user.email,
+            username: user.username,
+          };
+        }
         next();
       },
     );
   } catch (error) {
-    console.log(error)
+    console.error(error);
     return res.sendStatus(401);
   }
 };

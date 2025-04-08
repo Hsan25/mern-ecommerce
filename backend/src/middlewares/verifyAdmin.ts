@@ -21,18 +21,19 @@ export const verifyAdmin = async (
         }
         const user = await getUserById(ObjectId(decoded._id));
         if (!user) return res.sendStatus(401);
-        if (user.role != "ADMIN") return res.sendStatus(403);
+        if (user?.role !== "ADMIN") return res.sendStatus(403);
         req.user = {
-          id: user._id,
+          _id: user._id,
           email: user.email,
           role: user.role,
           username: user.username,
+          avatar: user?.avatar ?? { url: null, id: null },
         };
         next();
       },
     );
   } catch (error) {
-    console.log(error);
-    return res.sendStatus(400);
+    console.error(error);
+    return res.sendStatus(401);
   }
 };

@@ -36,17 +36,17 @@ export const getUserById = async (id: Types.ObjectId) => {
     if (!doc) throw new Error("User not found");
     return doc;
   } catch (error) {
-    console.log(error)
+    console.error(error);
     throw new Error("User not found");
   }
 };
 export const getProfileUser = async (id: Types.ObjectId) => {
   try {
-    const doc = await User.findById(id).select("-password -__v -refreshToken");
+    const doc = await User.findById(id).select("username email avatar");
     if (!doc) throw new Error("User not found");
     return doc;
   } catch (error) {
-    console.log(error)
+    console.error(error);
     throw new Error("User not found");
   }
 };
@@ -58,13 +58,16 @@ export const getUserByUsername = async (username: string) => {
     if (!doc) throw new Error("User not found");
     return doc;
   } catch (error) {
-    console.log(error)
+    console.error(error);
     throw new Error("User not found");
   }
 };
-export const register = async (body: UserBody) => {
+export const register = async (
+  body: UserBody,
+  provider: "google" | "credentials" = "credentials",
+) => {
   try {
-    const userExist = await User.find({
+    const userExist = await User.exists({
       $or: [
         {
           email: body.email,
@@ -75,7 +78,7 @@ export const register = async (body: UserBody) => {
       ],
     });
 
-    if (userExist.length) {
+    if (userExist) {
       throw Error("username or email is already in use");
     }
 
@@ -88,11 +91,13 @@ export const register = async (body: UserBody) => {
     const doc = await newUser.save();
     return doc;
   } catch (error) {
-    console.log(error)
-    throw error;
+    console.error(error);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+    throw new Error("signup failed");
   }
 };
-
 export const deleteUserById = async (id: Types.ObjectId) => {
   try {
     const doc = await User.findOneAndDelete({ _id: id });
@@ -101,25 +106,43 @@ export const deleteUserById = async (id: Types.ObjectId) => {
     }
     return doc;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw new Error("user not found");
   }
 };
-
 export const updateUserById = async (
   id: Types.ObjectId,
   body: Partial<UserType>,
 ) => {
   try {
+    // Pastikan user ada
     const existingUser = await User.exists({ _id: id });
-    if (!existingUser) throw new Error("user not found");
+    if (!existingUser) throw new Error("User not found");
+
+    // Cek jika username atau email sudah digunakan oleh user lain
+    if (body.email || body.username) {
+      const existUser = await User.exists({
+        $or: [
+          body.email ? { email: body.email } : {},
+          body.username ? { username: body.username } : {},
+        ],
+        _id: { $ne: id }, // Hindari user yang sedang diupdate
+      });
+
+      if (existUser) {
+        throw new Error("Username or email is already in use");
+      }
+    }
+
+    // Update user
     const doc = await User.updateOne(
       { _id: id },
       { ...body, updatedAt: Date.now() },
     );
+
     return doc.modifiedCount;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw new Error(
       error instanceof Error ? error.message : "ERROR UPDATE USER",
     );

@@ -3,7 +3,7 @@ import { adminMiddleware } from "./lib/middlewares/admin.middleware";
 import { authMiddleware } from "./lib/middlewares/auth.middleware";
 import { isAuthenticated } from "./action";
 const adminRoutes = ["/dashboard"];
-const isProtectedRoute = ["/checkout", "/profile", "/order"];
+const isProtectedRoute = ["/dashboard", "/checkout", "/profile", "/order"];
 import createIntlMiddleware from "next-intl/middleware";
 import { localePrefix, defaultLocale, locales, pathnames } from "./config";
 export const intlMiddleware = createIntlMiddleware({
@@ -17,10 +17,10 @@ export async function middleware(req: NextRequest) {
   try {
     const { pathname } = req.nextUrl;
     // remove lang locale
-    // /en/about => /about  
+    // /en/about => /about
     const path = "/" + pathname.split("/").splice(2).join("/");
     if (path.startsWith("/auth")) {
-      const isLogin = await isAuthenticated(req);
+      const isLogin = (await isAuthenticated(req)) as boolean;
       if (isLogin) {
         return NextResponse.redirect(new URL("/", req.url));
       }
@@ -28,7 +28,6 @@ export async function middleware(req: NextRequest) {
     }
     // 4. Check if the route requires admin access
     if (isProtectedRoute.some((pathAuth) => path.startsWith(pathAuth))) {
-
       return authMiddleware(req);
     }
     if (adminRoutes.some((adminPath) => path.startsWith(adminPath))) {
@@ -39,7 +38,7 @@ export async function middleware(req: NextRequest) {
     console.error("Error in middleware processing:", error);
     // On error, handle redirects appropriately
     const currentUrl = encodeURIComponent(req.nextUrl.href); // Encode URL to be used in redirection
-    const token = req.cookies.get("auth-token")?.value;
+    const token = req.cookies.get("accessToken")?.value;
     const { pathname } = req.nextUrl;
 
     if (token) {

@@ -19,6 +19,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { fetcher } from "@/lib/fetcher";
 import useSWR from "swr";
 import SelectCustom from "@/components/SelectCustom";
+import Loading from "@/components/Loading";
 
 interface Props {
   open: boolean;
@@ -27,7 +28,14 @@ interface Props {
   };
 }
 
-const status = ["Pending", "Processing", "Shipped", "Delivered", "Cancelled", "Not processed"];
+const status = [
+  "Pending",
+  "Processing",
+  "Shipped",
+  "Delivered",
+  "Cancelled",
+  "Not processed",
+];
 
 const UpdateOrderPage = ({ open, params }: Props) => {
   const { push } = useRouter();
@@ -36,8 +44,8 @@ const UpdateOrderPage = ({ open, params }: Props) => {
 
   const { data: order, isLoading } = useSWR<Order>(
     `/orders/${params.id}`,
-    async (url:string) => await fetcher(url, "order")
-  )
+    async (url: string) => await fetcher(url, "order")
+  );
   const sumbitChanges = async (e: any) => {
     try {
       const res = await apiService.put(`/orders/${params.id}`, {
@@ -65,7 +73,8 @@ const UpdateOrderPage = ({ open, params }: Props) => {
           defaultOpen={true}
           onOpenChange={(e) => {
             push("/dashboard/orders");
-          }}>
+          }}
+        >
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
               <DialogTitle>Update Order</DialogTitle>
@@ -78,13 +87,20 @@ const UpdateOrderPage = ({ open, params }: Props) => {
                 <Label htmlFor="name" className="text-right">
                   id
                 </Label>
-                <Input id="name" defaultValue={order._id} disabled={true} className="col-span-3" />
+                <Input
+                  id="name"
+                  defaultValue={order._id}
+                  disabled={true}
+                  className="col-span-3"
+                />
               </div>
               <div className="flex items-center gap-4">
                 <Label className="text-right">status</Label>
                 <SelectCustom
                   defaultValue={order.status}
-                  onValueChange={(val: string) => setStatusOrder(val as StatusOrder)}
+                  onValueChange={(val: string) =>
+                    setStatusOrder(val as StatusOrder)
+                  }
                   placeholder="Select a Status Order"
                   label="Status Order"
                   items={status.map((s, i) => ({ name: s, value: s }))}
@@ -93,14 +109,18 @@ const UpdateOrderPage = ({ open, params }: Props) => {
             </div>
 
             <DialogFooter>
-              <Button type="submit" onClick={sumbitChanges} disabled={!statusOrder}>
+              <Button
+                type="submit"
+                onClick={sumbitChanges}
+                disabled={!statusOrder}
+              >
                 Save changes
               </Button>
             </DialogFooter>
           </DialogContent>
         </DialogWrapper>
       ) : (
-        <p>Loading....</p>
+        <Loading />
       )}
     </>
   );

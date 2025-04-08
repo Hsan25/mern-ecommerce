@@ -12,7 +12,7 @@ const NavbarDashboard = () => {
           {user?.username}
         </div>
         <div className="relative w-12 h-12 overflow-hidden rounded-full border-white">
-          <Image src={user?.avatar || ""} alt="avatar" fill />
+          <Image src={user?.avatar.url || ""} alt="avatar" fill />
         </div>
       </div>
     </nav>

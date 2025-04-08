@@ -3,7 +3,6 @@ import { fetcher } from "@/lib/fetcher";
 import { OrderDetail } from "@/types/order";
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
-import paymentData from "@/data/payment.json";
 import { Button } from "@/components/ui/button";
 import AlertDialog from "@/components/AlertDialog";
 import { useRouter } from "next/navigation";
@@ -12,28 +11,19 @@ import { useAuth } from "@/context/authContext";
 import { useToast } from "@/components/ui/use-toast";
 import { PaymentMethod } from "@/types";
 import { PaymentMethodType } from "@/types/payment";
+import Loading from "@/components/Loading";
 interface Props {
   params: {
     id: string;
   };
 }
 const PayOrderPage = ({ params }: Props) => {
-  // const { data, isLoading } = useSWR<{ order: OrderDetail }>(
-  //   `/orders/${params.id}`,
-  //   fetcher
-  // );
-  // const { data: payments, isLoading: loadingPayments } = useSWR<
-  //   PaymentMethodType[]
-  // >(
-  //   `/payment-method`,
-  //   async (url: string) => await fetcher(url, "paymentMethod")
-  // );
   const [order, setOrder] = useState<OrderDetail>();
   const { push } = useRouter();
   const [open, setOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [payment, setPayment] = useState<PaymentMethodType>();
-  const { user } = useAuth();
+  const { user, isAuthenticate } = useAuth();
   const { toast } = useToast();
   const createPayment = async () => {
     try {
@@ -42,7 +32,6 @@ const PayOrderPage = ({ params }: Props) => {
         orderId: params.id,
         user: user?._id,
       });
-      console.log(res.data);
       toast({
         title: "notif",
         description: "success request confirmation",
@@ -69,17 +58,16 @@ const PayOrderPage = ({ params }: Props) => {
       } catch (error) {
         console.log(error);
       }
+      // setIsLoading(false);
     };
-    if (!order) fetchOrder();
-  }, []);
+    if (!order && isAuthenticate) fetchOrder();
+  }, [isAuthenticate]);
   useEffect(() => {
     const fetchPayments = async () => {
       try {
         const res = await apiService.get("/payment-method");
         const payments = res.data.data.paymentMethod as PaymentMethodType[];
         let pay = payments.filter((p) => p.method == order?.payment.method);
-        console.log(payments);
-        console.log(pay);
         setPayment(pay[0]);
       } catch (error) {
         console.log(error);
@@ -90,7 +78,7 @@ const PayOrderPage = ({ params }: Props) => {
     if (order) fetchPayments();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [order]);
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loading />;
   if (
     order?.payment.isPaid ||
     order?.status == "Cancelled" ||

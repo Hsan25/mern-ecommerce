@@ -17,6 +17,7 @@ import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { FormFieldProduct } from "@/types/product";
 import { schemaProduct } from "@/lib/zod/schemaProduct";
+import Loading from "../Loading";
 
 const FormUpdateProduct = ({ id }: { id: string }) => {
   const [error, setError] = useState<string>("");
@@ -78,7 +79,7 @@ const FormUpdateProduct = ({ id }: { id: string }) => {
       setIsLoading(false);
     }
   };
-  if (loadingCategories || loadingProduct) return <p>Loading...</p>;
+  if (loadingCategories || loadingProduct) return <Loading/>;
   return (
     <>
       <div className="text-lg font-medium">Update Product</div>
@@ -151,7 +152,7 @@ const FormUpdateProduct = ({ id }: { id: string }) => {
             className=" cursor-pointer z-10 opacity-0 w-full block h-full absolute inset-0"
           />
           <Image
-            src={file ? URL.createObjectURL(file) : product?.images[0] || ""}
+            src={file ? URL.createObjectURL(file) : product?.images[0].url || ""}
             fill={true}
             alt={"Image Product"}
           />
