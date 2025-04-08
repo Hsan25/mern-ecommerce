@@ -10,7 +10,7 @@
     "outDir": "./dist",
     "baseUrl": "./src",
     "noImplicitAny": true,
-    "types": ["./src/types/index.d.ts"],
+    "types": ["./src/types/index.d.ts", "node"],
     "paths": {
       "@controller/*": ["controller/*"],
       "@model/*": ["model/*"],
