@@ -1,7 +1,7 @@
 import categoryController from "@controller/category.controller";
 
 import express from "express";
-import { verifyAdmin } from "middlewares/verifyAdmin";
+import { verifyAdmin } from "@midlewares/verifyAdmin";
 const router = express.Router();
 
 router.get("/", categoryController.getCategories);

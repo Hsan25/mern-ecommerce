@@ -10,7 +10,7 @@ import OrderRouter from "./order.route";
 import PaymentRouter from "./payment.route";
 import ShippingMethodRouter from "./shippingMethod.route";
 import PaymentMethodRouter from "./paymentMethod.route";
-import { verifyAdmin } from "middlewares/verifyAdmin";
+import { verifyAdmin } from "@midlewares/verifyAdmin";
 import ReportController from "@controller/report.controller";
 // product route
 router.use("/products", ProductRouter);

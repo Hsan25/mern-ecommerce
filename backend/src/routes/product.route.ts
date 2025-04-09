@@ -1,9 +1,9 @@
-import { upload } from "lib/multer";
+import { upload } from "../lib/multer";
 import productController from "@controller/product.controller";
 import ReviewController from "@controller/review.controller";
 import express from "express";
-import { verifyAdmin } from "middlewares/verifyAdmin";
-import { verifyUser } from "middlewares/verifyUser";
+import { verifyAdmin } from "@midlewares/verifyAdmin";
+import { verifyUser } from "@midlewares/verifyUser";
 const router = express.Router();
 
 router.get("/", productController.getProducts);

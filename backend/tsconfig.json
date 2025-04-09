@@ -17,18 +17,12 @@
       "@model/*": ["model/*"],
       "@service/*": ["service/*"],
       "@utils/*": ["utils/*"],
-      "@config/*": ["config/*"]
+      "@config/*": ["config/*"],
+      "@midlewares/*": ["middlewares/*"]
     },
     "resolveJsonModule": true
   },
-  "include": [
-    "src/**/*.ts",
-    "src/app.ts",
-    "src/server.ts",
-    "*.ts",
-    "src",
-    "jest.config.ts"
-  ],
+  "include": ["src/**/*.ts", "src/*.ts"],
   "exclude": [
     "node_modules",
     "./src/__test__/coverage",

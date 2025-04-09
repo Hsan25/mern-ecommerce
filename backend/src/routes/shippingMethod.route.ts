@@ -1,6 +1,6 @@
 import shippingMethodController from "@controller/shippingMethod.controller";
 import express from "express";
-import { verifyAdmin } from "middlewares/verifyAdmin";
+import { verifyAdmin } from "@midlewares/verifyAdmin";
 const router = express.Router();
 
 router.get("/", shippingMethodController.getShippingMethods);

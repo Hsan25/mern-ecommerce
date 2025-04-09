@@ -1,8 +1,8 @@
 import UserController from "@controller/user.controller";
 import express from "express";
-import { verifyAdmin } from "../middlewares/verifyAdmin";
-import { verifyUser } from "middlewares/verifyUser";
-import { upload } from "lib/multer";
+import { verifyAdmin } from "@midlewares/verifyAdmin";
+import { verifyUser } from "@midlewares/verifyUser";
+import { upload } from "../lib/multer";
 const router = express.Router();
 
 router.get("/:id", verifyUser, UserController.getUserById);

@@ -9,17 +9,12 @@ import {
   updateProductById,
 } from "@service/product.service";
 import { z } from "zod";
-import { upload } from "lib/multer";
 import { ObjectId } from "@utils/index";
 import { ProductBody, SortProduct } from "types/product";
-import { schemaProduct } from "lib/zodSchema/product.schema";
-import { updateImage, uploadImage } from "lib/cloudinary";
+import { schemaProduct } from "../lib/zodSchema/product.schema";
+import { updateImage, uploadImage } from "../lib/cloudinary";
 import { UploadApiResponse } from "cloudinary";
 import { Types } from "mongoose";
-const productUpload = upload.single("image");
-
-// const schemaProduct
-
 const productController = {
   createProduct: async (
     req: Request & { fileValidationError?: string },

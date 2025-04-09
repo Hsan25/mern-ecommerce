@@ -4,7 +4,7 @@ import { Cart, CartItem } from "./cart.model";
 import reviewModel from "./review.model";
 import productModel from "./product.model";
 import addressModel from "./address.model";
-import { deleteImage } from "lib/cloudinary";
+import { deleteImage } from "../lib/cloudinary";
 const SchemaUser = new mongoose.Schema(
   {
     username: { type: String, required: true, unique: true },

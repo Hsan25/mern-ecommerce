@@ -1,4 +1,3 @@
-import { upload } from "lib/multer";
 import response from "@utils/response";
 import {
   getUsers,
@@ -11,7 +10,7 @@ import { UserType } from "types";
 import { z } from "zod";
 import { Types } from "mongoose";
 import { ObjectId } from "@utils/index";
-import { updateImage, uploadImage } from "lib/cloudinary";
+import { updateImage, uploadImage } from "../lib/cloudinary";
 import { UploadApiResponse } from "cloudinary";
 const schemaUpdate = z.optional(
   z.object({
@@ -84,7 +83,7 @@ const UserController = {
       let body: Partial<UserType> = req.body.user;
       // if (!body) return res.status(400).json({ msg: "the field cannot be empty" });
       body = body && typeof body === "string" ? JSON.parse(body) : body;
-      if (req.user?.role  && body.role) {
+      if (req.user?.role && body.role) {
         return res.sendStatus(403);
       }
       const parse = body ? schemaUpdate.parse(body) : {};

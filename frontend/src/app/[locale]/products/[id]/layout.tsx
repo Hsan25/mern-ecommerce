@@ -1,26 +1,12 @@
-// import React from "react";
-// import ProductDetailPage from "./page";
-// import { Metadata } from "next";
-
-// export const metadata: Metadata = {
-//   title: "detail",
-// };
-
-// export default ProductDetailPage;
 import type { Metadata } from "next";
-import ProductDetailPage from "./page";
+import React from "react";
 
-type Props = {
-  params: { id: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
-
-export function generateMetadata({ params, searchParams }: Props): Metadata {
+export function generateMetadata(): Metadata {
   return {
     title: `detail`,
   };
 }
 
-export default function Page({ params, searchParams }: Props) {
-  return <ProductDetailPage params={params} />;
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return children;
 }

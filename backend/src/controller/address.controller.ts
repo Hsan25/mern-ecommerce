@@ -10,7 +10,7 @@ import response from "@utils/response";
 import { Types, isValidObjectId } from "mongoose";
 import { z } from "zod";
 import { AddressInterface } from "types/address";
-import { AddressSchema } from "lib/zodSchema/address.schema";
+import { AddressSchema } from "../lib/zodSchema/address.schema";
 const AddressController = {
   createAddress: async (req: Request, res: Response) => {
     try {

@@ -1,6 +1,6 @@
 import AuthController from "@controller/auth.controller";
 import express from "express";
-import { verifyUser } from "middlewares/verifyUser";
+import { verifyUser } from "@midlewares/verifyUser";
 import passport from "passport";
 import jwt from "jsonwebtoken";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";

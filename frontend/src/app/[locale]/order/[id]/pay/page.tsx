@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { fetcher } from "@/lib/fetcher";
 import { OrderDetail } from "@/types/order";

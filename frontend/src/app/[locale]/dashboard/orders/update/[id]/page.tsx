@@ -22,7 +22,6 @@ import SelectCustom from "@/components/SelectCustom";
 import Loading from "@/components/Loading";
 
 interface Props {
-  open: boolean;
   params: {
     id: string;
   };
@@ -37,7 +36,7 @@ const status = [
   "Not processed",
 ];
 
-const UpdateOrderPage = ({ open, params }: Props) => {
+const UpdateOrderPage = ({  params }: Props) => {
   const { push } = useRouter();
   const [statusOrder, setStatusOrder] = useState<StatusOrder>();
   const { toast } = useToast();
