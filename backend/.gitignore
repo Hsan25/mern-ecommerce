@@ -8,7 +8,9 @@ dist
 
 # testing
 src/__test__/coverage
-/coverage
+coverage/
+.jest/
+
 
 # debug
 npm-debug.log*

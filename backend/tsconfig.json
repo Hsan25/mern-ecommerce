@@ -11,7 +11,7 @@
     "outDir": "./dist",
     "baseUrl": "./src",
     "noImplicitAny": true,
-    "types": ["./src/types/index.d.ts", "node"],
+    "types": ["./src/types/index.d.ts", "node", "jest"],
     "paths": {
       "@controller/*": ["controller/*"],
       "@model/*": ["model/*"],
@@ -31,10 +31,9 @@
   ],
   "exclude": [
     "node_modules",
-    ".src/__test__/coverage",
+    "./src/__test__/coverage",
     "./dist",
-    "./src/__tests__"
-    // "jest.config.ts"
+    "./src/__test__"
   ],
   "ts-node": {
     // Do not forget to `npm i -D tsconfig-paths`
