@@ -28,7 +28,7 @@ const CartItems = ({
       console.log("Failed add quantity");
     }
     // supaya tidak spam update quantity
-    await delay(300); //delay for waiting update quantity
+    await delay(200); //delay for waiting update quantity
     //
     const fetchCart = async () => {
       try {
@@ -39,7 +39,7 @@ const CartItems = ({
         setCarts(undefined);
       }
     };
-    fetchCart();
+    await fetchCart();
     setIsLoading(false);
   };
   const handleDeleteItem = async (itemId: string) => {

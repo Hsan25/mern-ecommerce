@@ -70,7 +70,7 @@ const RegisterPage = () => {
             {isLoading ? "Submiting..." : "Submit"}
           </Button>
         </div>
-        <div className="text-sm text-center">
+        <div className="text-base text-center">
           already have an account?
           <Link href={"/auth/login"}>
             <Button variant={"link"} type="button" size={"sm"}>

@@ -37,7 +37,7 @@ const ProductDetailPage = ({ params }: Props) => {
     `/products/${params.id}`,
     async (url: string) => await fetcher(url, "product")
   );
-  
+
   const handleAddCart = async (id: string) => {
     setLoadingAddCart(true);
     if (!isAuthenticate) {
@@ -95,28 +95,26 @@ const ProductDetailPage = ({ params }: Props) => {
             <div className="text-xl">{product?.name}</div>
             <Rating rating={product?.ratings} />
           </div>
-          <div className="text-sm md:text-base">
-            {formatIDR(product?.price || 0)}
-          </div>
-          <div className="text-sm">
+          <div className="text-base">{formatIDR(product?.price || 0)}</div>
+          <div className="text-base">
             stock:<span>{product?.stock}</span>
           </div>
-          <div className="text-sm">
+          <div className="text-base">
             sold:<span>{product?.sold_count}</span>
           </div>
-          <div className="text-sm">
+          <div className="text-base">
             <span>Categories: </span>
             {product?.categories.map((c, idx) => (
               <Link href={`/products/category/${c.name}`} key={idx}>
-                <Button size={"xs"} className="text-xs">
+                <Button size={"xs"} className="text-sm">
                   {c.name}
                 </Button>
               </Link>
             ))}
           </div>
-          <div className="text-sm">
+          <div className="text-base">
             <span className="block">Description: </span>
-            <div className="text-sm">{product?.description}</div>
+            <div className="">{product?.description}</div>
           </div>
           <Button
             disabled={loadingAddCart}

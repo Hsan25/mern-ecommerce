@@ -34,7 +34,7 @@ export default async function RootLayout({
         <OrderContextProvider>
           <SWRProvider>
             <Navbar />
-            <main className="container pt-8 md:px-10 lg:px-24">{children}</main>
+            <main className="container pt-8 md:px-10 lg:px-28">{children}</main>
             <Toaster />
             <Footer />
           </SWRProvider>

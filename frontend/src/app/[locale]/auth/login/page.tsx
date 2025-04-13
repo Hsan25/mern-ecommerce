@@ -83,7 +83,7 @@ const LoginPage = () => {
             {isLoading ? "Submiting..." : "Submit"}
           </Button>
         </div>
-        <div className="text-sm text-center">
+        <div className="text-base text-center">
           don{"'"}t have an account?
           <Link href={"/auth/signup"}>
             <Button variant={"link"} type="button">

@@ -28,7 +28,11 @@ const SideNavbar = ({ open, onClose }: Props) => {
         open ? "-left-0" : "-left-[800px]"
       } w-full top-20 px-4 overflow-hidden border-t py-6 md:hidden p-4  bg-background duration-200 transition-all  md:border-l md:border-foreground/30 min-h-screen fixed inset-y-0 z-50 `}
     >
-      {isAuthenticate ? null : <AuthButton />}
+      {isAuthenticate ? null : (
+        <div className="flex justify-center items-center">
+          <AuthButton />
+        </div>
+      )}
 
       <div className="pt-5">
         {nav.map((n, idx) => (

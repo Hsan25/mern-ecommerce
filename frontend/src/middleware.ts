@@ -3,7 +3,7 @@ import { adminMiddleware } from "./lib/middlewares/admin.middleware";
 import { authMiddleware } from "./lib/middlewares/auth.middleware";
 import { isAuthenticated } from "./action";
 const adminRoutes = ["/dashboard"];
-const isProtectedRoute = ["/dashboard", "/checkout", "/profile", "/order"];
+const protectedRoute = ["/dashboard", "/checkout", "/profile", "/order"];
 import createIntlMiddleware from "next-intl/middleware";
 import { localePrefix, defaultLocale, locales, pathnames } from "./config";
 export const intlMiddleware = createIntlMiddleware({
@@ -12,7 +12,7 @@ export const intlMiddleware = createIntlMiddleware({
   localePrefix,
   pathnames,
 });
-const publicPages = [""];
+
 export async function middleware(req: NextRequest) {
   try {
     const { pathname } = req.nextUrl;
@@ -27,7 +27,7 @@ export async function middleware(req: NextRequest) {
       return intlMiddleware(req);
     }
     // 4. Check if the route requires admin access
-    if (isProtectedRoute.some((pathAuth) => path.startsWith(pathAuth))) {
+    if (protectedRoute.some((pathAuth) => path.startsWith(pathAuth))) {
       return authMiddleware(req);
     }
     if (adminRoutes.some((adminPath) => path.startsWith(adminPath))) {

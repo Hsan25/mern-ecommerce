@@ -14,7 +14,7 @@ const TermsConditionsPage = () => {
 
       <section className="mb-4">
         <h2 className="text-xl font-semibold mb-2">1. Introduction</h2>
-        <p className="text-gray-100 text-sm">
+        <p className="text-gray-100 text-base">
           By accessing our website and making a purchase, you agree to the terms
           and conditions outlined here.
         </p>
@@ -22,7 +22,7 @@ const TermsConditionsPage = () => {
 
       <section className="mb-4">
         <h2 className="text-xl font-semibold mb-2">2. Orders</h2>
-        <p className="text-gray-100 text-sm">
+        <p className="text-gray-100 text-base">
           All orders are subject to availability and confirmation of payment. We
           reserve the right to cancel or modify orders as necessary.
         </p>
@@ -30,7 +30,7 @@ const TermsConditionsPage = () => {
 
       <section className="mb-4">
         <h2 className="text-xl font-semibold mb-2">3. Pricing and Payment</h2>
-        <p className="text-gray-100 text-sm">
+        <p className="text-gray-100 text-base">
           Prices are listed in your local currency and include applicable taxes.
           Payment must be made at checkout.
         </p>
@@ -38,7 +38,7 @@ const TermsConditionsPage = () => {
 
       <section className="mb-4">
         <h2 className="text-xl font-semibold mb-2">4. Returns and Refunds</h2>
-        <p className="text-gray-100 text-sm">
+        <p className="text-gray-100 text-base">
           Returns are accepted within 30 days of purchase. Refunds will be
           issued to the original payment method.
         </p>
@@ -46,7 +46,7 @@ const TermsConditionsPage = () => {
 
       <section className="mb-4">
         <h2 className="text-xl font-semibold mb-2">5. Liability</h2>
-        <p className="text-gray-100 text-sm">
+        <p className="text-gray-100 text-base">
           Our liability is limited to the purchase price of the item. We are not
           responsible for indirect losses resulting from the use of our site.
         </p>

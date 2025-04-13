@@ -100,16 +100,18 @@ const AuthController = {
           refreshToken,
         },
       );
+
       res.cookie("accessToken", accessToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV == "production",
         path: "/",
         maxAge: 5 * 60 * 1000, // 5 minute
         sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-        domain:
-          process.env.NODE_ENV === "production"
-            ? process.env.DOMAIN_CLIENT
-            : "localhost",
+        partitioned: process.env.NODE_ENV === "production",
+        // domain:
+        //   process.env.NODE_ENV === "production"
+        //     ? process.env.DOMAIN_CLIENT
+        //     : "localhost",
       });
       res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
@@ -117,10 +119,11 @@ const AuthController = {
         path: "/",
         maxAge: 30 * day, //30 day
         sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-        domain:
-          process.env.NODE_ENV === "production"
-            ? process.env.DOMAIN_CLIENT
-            : "localhost",
+        partitioned: process.env.NODE_ENV === "production",
+        // domain:
+        //   process.env.NODE_ENV === "production"
+        //     ? process.env.DOMAIN_CLIENT
+        //     : "localhost",
       });
 
       return response(res, 200, "success login", {
@@ -180,10 +183,11 @@ const AuthController = {
         path: "/",
         maxAge: 5 * 60 * 1000, // 5 minute
         sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-        domain:
-          process.env.NODE_ENV === "production"
-            ? process.env.DOMAIN_CLIENT
-            : "localhost",
+        partitioned: process.env.NODE_ENV === "production",
+        // domain:
+        //   process.env.NODE_ENV === "production"
+        //     ? process.env.DOMAIN_CLIENT
+        //     : "localhost",
       });
       return res.status(200).json({
         token: accessToken,
@@ -215,6 +219,8 @@ const AuthController = {
       return response(res, 400, "email is already use");
     }
 
+    // console.log(req.session.messages);
+    // req.session.messages
     const { accessToken, refreshToken } = req.user as unknown as {
       accessToken: string;
       refreshToken: string;
@@ -227,10 +233,11 @@ const AuthController = {
       path: "/",
       maxAge: 5 * 60 * 1000, // 5 minute
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      domain:
-        process.env.NODE_ENV === "production"
-          ? process.env.DOMAIN_CLIENT
-          : "localhost",
+      partitioned: process.env.NODE_ENV === "production",
+      // domain:
+      //   process.env.NODE_ENV === "production"
+      //     ? process.env.DOMAIN_CLIENT
+      //     : "localhost",
     });
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
@@ -238,10 +245,11 @@ const AuthController = {
       path: "/",
       maxAge: 30 * day, //30 day
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      domain:
-        process.env.NODE_ENV === "production"
-          ? process.env.DOMAIN_CLIENT
-          : "localhost",
+      partitioned: process.env.NODE_ENV === "production",
+      // domain:
+      //   process.env.NODE_ENV === "production"
+      //     ? process.env.DOMAIN_CLIENT
+      //     : "localhost",
     });
     const clientUrl = process.env.CLIENT_URL || "/";
     res.redirect(clientUrl); // Redirect ke halaman setelah login

@@ -28,7 +28,7 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const { push } = useRouter();
   const { toast } = useToast();
-  const [token, setToken] = useState<string>("");
+  // const [token, setToken] = useState<string>("");
   const searchParams = useSearchParams();
   const logout = async (): Promise<void> => {
     try {
@@ -60,7 +60,8 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       // 5m
       setUser(result.user as User);
       setIsAuthenticate(true);
-      localStorage.setItem("token", result.token);
+      // setToken(result.token);
+      localStorage.setItem("token", result.token); // save access token to localstorage
       const redirect =
         redirectUrl || decodeURIComponent(searchParams.get("redirect") || "/");
       push(redirect);
@@ -77,8 +78,6 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       throw new Error(error.response.data.msg || "signup Failed");
     }
   };
-
-
 
   useEffect(() => {
     const fetchUser = async () => {

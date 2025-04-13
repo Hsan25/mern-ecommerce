@@ -142,12 +142,12 @@ http://localhost:3001/api/docs
 **_Jika Anda menemukan masalah dalam proyek ini, silakan kirim laporan._**
 
 ## Peringatan
- **Project ini masih ada celah keamanan, jadi anda harus hati-hati.**
+ **Project ini mungkin masih ada celah keamanan, jadi hati-hati...**
 
 ## Teknologi yang Digunakan
 
 - **Frontend**: React, Next.js, TypeScript
 - **Backend**: Express.js, Node.js, MongoDB, TypeScript
 - **Manajemen State**: React Context
-- **Autentikasi**: JWT (JSON Web Token)
+- **Autentikasi**: JWT (JSON Web Token),Google Oauth2
 - **Database**: MongoDB dengan Mongoose
