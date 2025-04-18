@@ -25,9 +25,9 @@ const limiter = rateLimit({
 // Apply the rate limiting middleware to all requests.
 app.use(
   cors({
+    origin: [process.env.CLIENT_URL || ""],
     credentials: true,
     methods: ["GET", "HEAD", "PUT", "POST", "DELETE", "OPTIONS"],
-    origin: [process.env.CLIENT_URL || ""],
   }),
 );
 app.use(helmet());

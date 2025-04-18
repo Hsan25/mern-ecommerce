@@ -107,7 +107,8 @@ const AuthController = {
         path: "/",
         maxAge: 5 * 60 * 1000, // 5 minute
         sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-        partitioned: process.env.NODE_ENV === "production",
+        partitioned: process.env.NODE_ENV == "production",
+
         // domain:
         //   process.env.NODE_ENV === "production"
         //     ? process.env.DOMAIN_CLIENT
@@ -119,7 +120,9 @@ const AuthController = {
         path: "/",
         maxAge: 30 * day, //30 day
         sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-        partitioned: process.env.NODE_ENV === "production",
+
+        partitioned: process.env.NODE_ENV == "production",
+
         // domain:
         //   process.env.NODE_ENV === "production"
         //     ? process.env.DOMAIN_CLIENT
@@ -157,6 +160,7 @@ const AuthController = {
   },
   refreshToken: async (req: Request, res: Response) => {
     const { refreshToken } = req.cookies;
+    console.log(req.cookies)
     try {
       if (!refreshToken) return res.sendStatus(401);
       const decoded = jwt.verify(
@@ -183,7 +187,9 @@ const AuthController = {
         path: "/",
         maxAge: 5 * 60 * 1000, // 5 minute
         sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-        partitioned: process.env.NODE_ENV === "production",
+
+        partitioned: process.env.NODE_ENV == "production",
+
         // domain:
         //   process.env.NODE_ENV === "production"
         //     ? process.env.DOMAIN_CLIENT
@@ -218,9 +224,6 @@ const AuthController = {
     if (!req.user) {
       return response(res, 400, "email is already use");
     }
-
-    // console.log(req.session.messages);
-    // req.session.messages
     const { accessToken, refreshToken } = req.user as unknown as {
       accessToken: string;
       refreshToken: string;
@@ -233,7 +236,8 @@ const AuthController = {
       path: "/",
       maxAge: 5 * 60 * 1000, // 5 minute
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      partitioned: process.env.NODE_ENV === "production",
+      partitioned: process.env.NODE_ENV == "production",
+
       // domain:
       //   process.env.NODE_ENV === "production"
       //     ? process.env.DOMAIN_CLIENT
@@ -245,7 +249,8 @@ const AuthController = {
       path: "/",
       maxAge: 30 * day, //30 day
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      partitioned: process.env.NODE_ENV === "production",
+      partitioned: process.env.NODE_ENV == "production",
+
       // domain:
       //   process.env.NODE_ENV === "production"
       //     ? process.env.DOMAIN_CLIENT

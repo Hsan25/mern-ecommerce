@@ -59,6 +59,8 @@ const LoginPage = () => {
       setIsLoading(false);
     }
   };
+  
+
   return (
     <div className="bg-background min-h-screen p-3 flex justify-center items-center">
       <form

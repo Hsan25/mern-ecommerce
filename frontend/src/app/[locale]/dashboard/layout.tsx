@@ -1,5 +1,6 @@
 import NavbarDashboard from "@/components/Dashboard/Navbar";
 import SideBarDashboard from "@/components/Dashboard/SideBar";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { Metadata } from "next";
 import React, { ReactNode } from "react";
 
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
 };
 const LayoutDashboard = ({ children }: { children: ReactNode }) => {
   return (
-    <>
+    <ProtectedRoute role="ADMIN">
       <div className="flex absolute inset-0 overflow-hidden max-h-screen min-h-screen">
         <SideBarDashboard />
         <div className="w-full overflow-auto">
@@ -20,7 +21,7 @@ const LayoutDashboard = ({ children }: { children: ReactNode }) => {
           <div className="p-5 overflow-auto min-h-[90vh]">{children}</div>
         </div>
       </div>
-    </>
+    </ProtectedRoute>
   );
 };
 

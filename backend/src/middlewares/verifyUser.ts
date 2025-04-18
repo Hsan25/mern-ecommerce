@@ -21,7 +21,7 @@ export const verifyUser = async (
         }
         const user = await getUserById(decoded._id);
         if (!user) return res.sendStatus(401);
-        if (req.user?.role == "ADMIN") {
+        if (user?.role == "ADMIN") {
           req.user = {
             avatar: user?.avatar ?? { url: null, id: null },
             _id: user._id,
