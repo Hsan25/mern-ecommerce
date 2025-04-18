@@ -108,11 +108,6 @@ const AuthController = {
         maxAge: 5 * 60 * 1000, // 5 minute
         sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
         partitioned: process.env.NODE_ENV == "production",
-
-        // domain:
-        //   process.env.NODE_ENV === "production"
-        //     ? process.env.DOMAIN_CLIENT
-        //     : "localhost",
       });
       res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
@@ -120,13 +115,7 @@ const AuthController = {
         path: "/",
         maxAge: 30 * day, //30 day
         sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-
         partitioned: process.env.NODE_ENV == "production",
-
-        // domain:
-        //   process.env.NODE_ENV === "production"
-        //     ? process.env.DOMAIN_CLIENT
-        //     : "localhost",
       });
 
       return response(res, 200, "success login", {
@@ -160,7 +149,6 @@ const AuthController = {
   },
   refreshToken: async (req: Request, res: Response) => {
     const { refreshToken } = req.cookies;
-    console.log(req.cookies)
     try {
       if (!refreshToken) return res.sendStatus(401);
       const decoded = jwt.verify(
@@ -189,11 +177,6 @@ const AuthController = {
         sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
 
         partitioned: process.env.NODE_ENV == "production",
-
-        // domain:
-        //   process.env.NODE_ENV === "production"
-        //     ? process.env.DOMAIN_CLIENT
-        //     : "localhost",
       });
       return res.status(200).json({
         token: accessToken,

@@ -11,7 +11,6 @@ import { Signup, User } from "@/types";
 import apiService, { ConfigAxios } from "@/lib/axios";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
-import axios from "axios";
 
 interface AuthContextType {
   user: User | null;
@@ -55,9 +54,7 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     redirectUrl?: string
   ) => {
     try {
-      const response = await axios.post(`/auth/login`, data, {
-        withCredentials: true,
-      });
+      const response = await apiService.post(`/auth/login`, data);
       const result = await response.data;
       // simpan access token di local storage
       // 5m
