@@ -55,7 +55,7 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   ) => {
     try {
       const response = await apiService.post(`/auth/login`, data);
-      const result = await response.data;
+      const result = await response.data.data;
       // simpan access token di local storage
       // 5m
       setUser(result.user as User);
