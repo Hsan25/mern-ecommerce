@@ -4,7 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { formatIDR } from "@/utils";
 import { Input } from "../ui/input";
 import { PaymentMethod } from "@/types";
-import { createOrder } from "@/action/order.action";
+import { createOrder } from "@/service/order.service";
 import { toast } from "../ui/use-toast";
 import { useOrder } from "@/context/orderContext";
 import useSWR from "swr";
