@@ -16,7 +16,7 @@ export const verifyUser = async (
       process.env.ACCESS_TOKEN_SECRET || "",
       async (err, decoded: any) => {
         if (err) {
-          console.log(err);
+          console.log(err.stack);
           return res.sendStatus(401);
         }
         const user = await getUserById(decoded._id);

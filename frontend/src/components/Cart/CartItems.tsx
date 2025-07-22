@@ -20,28 +20,27 @@ const CartItems = ({
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { user } = useAuth();
+  const [input, setInput] = useState("");
   const handleUpdateQuantity = async (itemId: string, qty: number | string) => {
     setIsLoading(true);
     try {
-      const res = await apiService.put(`/carts/${itemId}`, { quantity: qty });
+      await apiService.put(`/carts/${itemId}`, { quantity: qty });
     } catch (error) {
       console.log("Failed add quantity");
     }
     // supaya tidak spam update quantity
-    await delay(200); //delay for waiting update quantity
-    //
-    const fetchCart = async () => {
-      try {
-        const res = await apiService.get(`/carts/${user?._id}`);
-        const data = res.data.data;
-        setCarts(data.cart as Cart);
-      } catch (error) {
-        setCarts(undefined);
-      }
-    };
-    await fetchCart();
+    setCarts((prev) => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        items: prev.items.map((item) =>
+          item._id === itemId ? { ...item, quantity: Number(qty) } : item
+        ),
+      };
+    });
     setIsLoading(false);
   };
+
   const handleDeleteItem = async (itemId: string) => {
     setIsLoading(true);
     try {
@@ -56,7 +55,6 @@ const CartItems = ({
         const data = res.data.data;
         setCarts(data.cart as Cart);
       } catch (error) {
-        console.log("Failed fetch cart");
         setCarts(undefined);
       }
     };
@@ -103,6 +101,7 @@ const CartItems = ({
               type={"text"}
               disabled={true}
               value={cart.quantity}
+              onChange={(e) => setInput(e.target.value)}
               className="w-10 h-6 p-2 text-center text-xs pointer-events-none"
             />
             <Button

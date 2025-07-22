@@ -9,15 +9,29 @@ import SWRProvider from "@/components/swr-provider";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import OrderContextProvider from "@/context/orderContext";
-export const metadata: Metadata = {
-  title: {
-    template: " %s | Galaxy-store",
-    default: "Galaxy-store",
-  },
-  description: "Belanja disini saja.",
-  keywords: ["ecommerce", "shoes"],
-};
 
+export const metadata: Metadata = {
+  title: "Galaxy Store - Jual Produk Keren",
+  description: "Temukan produk pilihan berkualitas di Galaxy Store.",
+  keywords: "galaxy, store, ecommerce, produk, online shop,belanja online",
+  robots: "index, follow",
+  manifest: "/manifest.json",
+  openGraph: {
+    title: "Galaxy Store",
+    description: "Temukan produk pilihan berkualitas di Galaxy Store.",
+    url: "https://galaxy-store-x.vercel.app",
+    siteName: "Galaxy Store",
+    images: [
+      {
+        url: "/galaxy.jpg", // gambar untuk sosial media
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "id_ID",
+    type: "website",
+  },
+};
 export default async function RootLayout({
   children,
   params,

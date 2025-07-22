@@ -77,7 +77,7 @@ export const updateItemCart = async (
     const totalPrice = body.quantity * cartExist.purchasePrice;
     const cart = await CartItem.updateOne(
       { _id: itemCartId },
-      { ...body, totalPrice },
+      { $set: { ...body, totalPrice } },
     );
     if (cart.modifiedCount == 0) throw new Error("cart item not found");
     return cart.modifiedCount;

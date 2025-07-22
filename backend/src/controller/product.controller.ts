@@ -15,6 +15,7 @@ import { schemaProduct } from "../lib/zodSchema/product.schema";
 import { updateImage, uploadImage } from "../lib/cloudinary";
 import { UploadApiResponse } from "cloudinary";
 import { Types } from "mongoose";
+
 const productController = {
   createProduct: async (
     req: Request & { fileValidationError?: string },
